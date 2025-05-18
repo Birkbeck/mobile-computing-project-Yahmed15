@@ -1,0 +1,59 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/etRecipeName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Recipe Name"
+            android:text="Spaghetti Bolognese"
+            tools:text="Spaghetti Bolognese" />
+
+        <Spinner
+            android:id="@+id/spinnerCategory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:prompt="Dinner" />
+
+        <EditText
+            android:id="@+id/etIngredients"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Ingredients"
+            android:lines="5"
+            android:gravity="top"
+            android:inputType="textMultiLine"
+            android:text="200g pasta\n100g minced meat\nTomato sauce\nSalt"
+            tools:text="200g pasta\n100g minced meat\nTomato sauce\nSalt" />
+
+        <EditText
+            android:id="@+id/etInstructions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Instructions"
+            android:lines="6"
+            android:gravity="top"
+            android:inputType="textMultiLine"
+            android:text="1. Boil pasta.\n2. Cook meat.\n3. Mix with sauce.\n4. Serve hot."
+            tools:text="1. Boil pasta.\n2. Cook meat.\n3. Mix with sauce.\n4. Serve hot." />
+
+        <Button
+            android:id="@+id/btnSaveChanges"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Save Changes" />
+
+        <Button
+            android:id="@+id/btnCancelEdit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Cancel" />
+    </LinearLayout>
+</ScrollView>
