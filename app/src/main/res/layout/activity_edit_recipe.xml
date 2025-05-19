@@ -1,7 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp">
+    android:padding="16dp"
+    tools:context=".EditRecipeActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -9,51 +12,61 @@
         android:orientation="vertical">
 
         <EditText
-            android:id="@+id/etRecipeName"
+            android:id="@+id/etEditRecipeName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Recipe Name"
-            android:text="Spaghetti Bolognese"
-            tools:text="Spaghetti Bolognese" />
-
-        <Spinner
-            android:id="@+id/spinnerCategory"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:prompt="Dinner" />
+            android:hint="Recipe Name" />
 
         <EditText
-            android:id="@+id/etIngredients"
+            android:id="@+id/etEditIngredients"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Ingredients"
-            android:lines="5"
-            android:gravity="top"
             android:inputType="textMultiLine"
-            android:text="200g pasta\n100g minced meat\nTomato sauce\nSalt"
-            tools:text="200g pasta\n100g minced meat\nTomato sauce\nSalt" />
+            android:minLines="4"
+            android:gravity="top" />
 
         <EditText
-            android:id="@+id/etInstructions"
+            android:id="@+id/etEditInstructions"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Instructions"
-            android:lines="6"
-            android:gravity="top"
             android:inputType="textMultiLine"
-            android:text="1. Boil pasta.\n2. Cook meat.\n3. Mix with sauce.\n4. Serve hot."
-            tools:text="1. Boil pasta.\n2. Cook meat.\n3. Mix with sauce.\n4. Serve hot." />
+            android:minLines="6"
+            android:gravity="top" />
 
-        <Button
-            android:id="@+id/btnSaveChanges"
+        <EditText
+            android:id="@+id/etEditCategory"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Save Changes" />
+            android:hint="Category" />
 
-        <Button
-            android:id="@+id/btnCancelEdit"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Cancel" />
+            android:orientation="horizontal"
+            android:gravity="end"
+            android:layout_marginTop="16dp">
+
+            <Button
+                android:id="@+id/btnCancelEdit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Cancel" />
+
+            <Button
+                android:id="@+id/btnSaveChanges"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Save"
+                android:layout_marginStart="12dp" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btnDeleteRecipe"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Delete Recipe"
+            android:layout_marginTop="24dp" />
     </LinearLayout>
 </ScrollView>
