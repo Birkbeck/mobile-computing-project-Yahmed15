@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/scrollViewAdd"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
@@ -11,21 +13,21 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <!-- Title -->
+        <!-- Recipe Title -->
         <EditText
             android:id="@+id/etRecipeName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Recipe Name" />
 
-        <!-- Category -->
+        <!-- Category Selector -->
         <Spinner
             android:id="@+id/spinnerCategory"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:prompt="Select Category" />
+            android:layout_marginTop="8dp" />
 
-        <!-- Ingredients -->
+        <!-- Ingredients Input -->
         <EditText
             android:id="@+id/etIngredients"
             android:layout_width="match_parent"
@@ -34,9 +36,9 @@
             android:inputType="textMultiLine"
             android:minLines="4"
             android:gravity="top"
-            android:layout_marginTop="16dp" />
+            android:layout_marginTop="8dp" />
 
-        <!-- Instructions -->
+        <!-- Instructions Input -->
         <EditText
             android:id="@+id/etInstructions"
             android:layout_width="match_parent"
@@ -45,15 +47,15 @@
             android:inputType="textMultiLine"
             android:minLines="6"
             android:gravity="top"
-            android:layout_marginTop="16dp" />
+            android:layout_marginTop="8dp" />
 
-        <!-- Save & Cancel -->
+        <!-- Actions -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginTop="24dp"
-            android:gravity="end">
+            android:gravity="end"
+            android:layout_marginTop="16dp">
 
             <Button
                 android:id="@+id/btnCancelAdd"

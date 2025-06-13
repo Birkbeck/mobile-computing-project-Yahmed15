@@ -2,59 +2,58 @@ package com.example.culinarycompanion
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButton
 
 class DashboardActivity : AppCompatActivity() {
-    private lateinit var recyclerView: RecyclerView
+    private lateinit var dao: RecipeDao
     private lateinit var adapter: RecipeAdapter
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun onCreate(saved: Bundle?) {
+        super.onCreate(saved)
         setContentView(R.layout.activity_dashboard)
 
-        // 1. Set up RecyclerView with mock data and click listener
-        recyclerView = findViewById(R.id.recipeRecyclerView)
-        recyclerView.layoutManager = LinearLayoutManager(this)
-        val sampleRecipes = listOf(
-            Recipe("Spaghetti Bolognese", "Dinner", "Pasta, Sauce", "Boil and serve"),
-            Recipe("Pancakes", "Breakfast", "Flour, Milk, Egg", "Whisk and fry")
-        )
-        adapter = RecipeAdapter(sampleRecipes) { recipe ->
-            // On recipe click, open detail page
-            val intent = Intent(this, RecipeDetailActivity::class.java)
-            intent.putExtra("recipe_name", recipe.name)
-            intent.putExtra("recipe_category", recipe.category)
-            intent.putExtra("recipe_ingredients", recipe.ingredients)
-            intent.putExtra("recipe_instructions", recipe.instructions)
-            startActivity(intent)
-        }
-        recyclerView.adapter = adapter
+        dao = AppDatabase.getInstance(this).recipeDao()
 
-        // 2. New Recipe button → AddRecipeActivity
-        findViewById<MaterialButton>(R.id.btnNewRecipe).setOnClickListener {
-            startActivity(Intent(this, AddRecipeActivity::class.java))
+        // RecyclerView setup
+        val rv = findViewById<RecyclerView>(R.id.recipeRecyclerView)
+        rv.layoutManager = LinearLayoutManager(this)
+        adapter = RecipeAdapter(emptyList()) { r ->
+            val i = Intent(this, RecipeDetailActivity::class.java).apply {
+                putExtra("id", r.id)
+            }
+            startActivity(i)
+        }
+        rv.adapter = adapter
+
+        // Observe all recipes
+        dao.getAll().observe(this) { list ->
+            adapter.setRecipes(list)
         }
 
-        // 3. Category taps → FilterActivity with selected category
-        val categoryIds = listOf(
-            R.id.tvCategoryBreakfast,
-            R.id.tvCategoryBrunch,
-            R.id.tvCategoryLunch,
-            R.id.tvCategoryDinner,
-            R.id.tvCategoryDessert,
-            R.id.tvCategoryOther
-        )
-        categoryIds.forEach { id ->
-            findViewById<TextView>(id).setOnClickListener { v ->
-                val category = (v as TextView).text.toString()
-                val intent = Intent(this, FilterActivity::class.java)
-                intent.putExtra("filter_category", category)
-                startActivity(intent)
+        // New Recipe button
+        findViewById<MaterialButton>(R.id.btnNewRecipe)
+            .setOnClickListener { startActivity(Intent(this, AddRecipeActivity::class.java)) }
+
+        // Category taps
+        listOf(
+            R.id.tvCategoryBreakfast to "Breakfast",
+            R.id.tvCategoryBrunch    to "Brunch",
+            R.id.tvCategoryLunch     to "Lunch",
+            R.id.tvCategoryDinner    to "Dinner",
+            R.id.tvCategoryDessert   to "Desserts",
+            R.id.tvCategoryOther     to "Other"
+        ).forEach { (id, cat) ->
+            findViewById<TextView>(id).setOnClickListener {
+                // Launch FilterActivity
+                Intent(this, FilterActivity::class.java).also {
+                    it.putExtra("filter", cat)
+                    startActivity(it)
+                }
             }
         }
     }

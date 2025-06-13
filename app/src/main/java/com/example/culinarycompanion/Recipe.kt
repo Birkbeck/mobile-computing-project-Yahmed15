@@ -1,9 +1,12 @@
 package com.example.culinarycompanion
 
-/**
- * Simple data class representing a recipe.
- */
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity(tableName = "recipes")
 data class Recipe(
+    @PrimaryKey(autoGenerate = true)
+    val id: Int = 0,
     val name: String,
     val category: String,
     val ingredients: String,

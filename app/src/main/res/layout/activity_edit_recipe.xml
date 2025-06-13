@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/scrollViewEdit"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
@@ -11,22 +13,22 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <!-- Title -->
+        <!-- Recipe Title -->
         <EditText
             android:id="@+id/etEditRecipeName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Recipe Name" />
+            android:hint="Recipe Name"
+            tools:text="Spaghetti Bolognese" />
 
-        <!-- Category -->
+        <!-- Category Selector -->
         <Spinner
             android:id="@+id/spinnerEditCategory"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:prompt="Select Category"
-            android:layout_marginTop="16dp" />
+            android:layout_marginTop="8dp" />
 
-        <!-- Ingredients -->
+        <!-- Ingredients Input -->
         <EditText
             android:id="@+id/etEditIngredients"
             android:layout_width="match_parent"
@@ -35,9 +37,10 @@
             android:inputType="textMultiLine"
             android:minLines="4"
             android:gravity="top"
-            android:layout_marginTop="16dp" />
+            android:layout_marginTop="8dp"
+            tools:text="Ingredient 1\nIngredient 2" />
 
-        <!-- Instructions -->
+        <!-- Instructions Input -->
         <EditText
             android:id="@+id/etEditInstructions"
             android:layout_width="match_parent"
@@ -46,15 +49,16 @@
             android:inputType="textMultiLine"
             android:minLines="6"
             android:gravity="top"
-            android:layout_marginTop="16dp" />
+            android:layout_marginTop="8dp"
+            tools:text="1. Step one\n2. Step two" />
 
-        <!-- Actions: Cancel, Save -->
+        <!-- Save & Cancel Buttons -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginTop="24dp"
-            android:gravity="end">
+            android:gravity="end"
+            android:layout_marginTop="16dp">
 
             <Button
                 android:id="@+id/btnCancelEdit"
@@ -70,13 +74,13 @@
                 android:layout_marginStart="16dp" />
         </LinearLayout>
 
-        <!-- Delete -->
+        <!-- Delete Button -->
         <Button
             android:id="@+id/btnDeleteRecipe"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Delete Recipe"
             android:textColor="@android:color/holo_red_dark"
-            android:layout_marginTop="32dp" />
+            android:layout_marginTop="24dp" />
     </LinearLayout>
 </ScrollView>
