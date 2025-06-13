@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Filter by Category"
+        android:textStyle="bold"
+        android:textSize="18sp" />
+
+    <CheckBox
+        android:id="@+id/cbBreakfast"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Breakfast"
+        android:layout_marginTop="12dp" />
+
+    <CheckBox
+        android:id="@+id/cbBrunch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Brunch" />
+
+    <CheckBox
+        android:id="@+id/cbLunch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Lunch" />
+
+    <CheckBox
+        android:id="@+id/cbDinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Dinner" />
+
+    <CheckBox
+        android:id="@+id/cbDessert"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Dessert" />
+
+    <CheckBox
+        android:id="@+id/cbOther"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Other" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="end"
+        android:layout_marginTop="24dp">
+
+        <Button
+            android:id="@+id/btnClearFilter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Clear" />
+
+        <Button
+            android:id="@+id/btnApplyFilter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Apply"
+            android:layout_marginStart="16dp" />
+    </LinearLayout>
+</LinearLayout>

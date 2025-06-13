@@ -11,12 +11,22 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+        <!-- Title -->
         <EditText
             android:id="@+id/etEditRecipeName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Recipe Name" />
 
+        <!-- Category -->
+        <Spinner
+            android:id="@+id/spinnerEditCategory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:prompt="Select Category"
+            android:layout_marginTop="16dp" />
+
+        <!-- Ingredients -->
         <EditText
             android:id="@+id/etEditIngredients"
             android:layout_width="match_parent"
@@ -24,8 +34,10 @@
             android:hint="Ingredients"
             android:inputType="textMultiLine"
             android:minLines="4"
-            android:gravity="top" />
+            android:gravity="top"
+            android:layout_marginTop="16dp" />
 
+        <!-- Instructions -->
         <EditText
             android:id="@+id/etEditInstructions"
             android:layout_width="match_parent"
@@ -33,20 +45,16 @@
             android:hint="Instructions"
             android:inputType="textMultiLine"
             android:minLines="6"
-            android:gravity="top" />
+            android:gravity="top"
+            android:layout_marginTop="16dp" />
 
-        <EditText
-            android:id="@+id/etEditCategory"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Category" />
-
+        <!-- Actions: Cancel, Save -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:gravity="end"
-            android:layout_marginTop="16dp">
+            android:layout_marginTop="24dp"
+            android:gravity="end">
 
             <Button
                 android:id="@+id/btnCancelEdit"
@@ -59,14 +67,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Save"
-                android:layout_marginStart="12dp" />
+                android:layout_marginStart="16dp" />
         </LinearLayout>
 
+        <!-- Delete -->
         <Button
             android:id="@+id/btnDeleteRecipe"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Delete Recipe"
-            android:layout_marginTop="24dp" />
+            android:textColor="@android:color/holo_red_dark"
+            android:layout_marginTop="32dp" />
     </LinearLayout>
 </ScrollView>
