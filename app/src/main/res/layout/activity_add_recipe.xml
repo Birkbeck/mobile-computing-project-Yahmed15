@@ -11,12 +11,21 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+        <!-- Title -->
         <EditText
             android:id="@+id/etRecipeName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Recipe Name" />
 
+        <!-- Category -->
+        <Spinner
+            android:id="@+id/spinnerCategory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:prompt="Select Category" />
+
+        <!-- Ingredients -->
         <EditText
             android:id="@+id/etIngredients"
             android:layout_width="match_parent"
@@ -24,8 +33,10 @@
             android:hint="Ingredients"
             android:inputType="textMultiLine"
             android:minLines="4"
-            android:gravity="top" />
+            android:gravity="top"
+            android:layout_marginTop="16dp" />
 
+        <!-- Instructions -->
         <EditText
             android:id="@+id/etInstructions"
             android:layout_width="match_parent"
@@ -33,12 +44,29 @@
             android:hint="Instructions"
             android:inputType="textMultiLine"
             android:minLines="6"
-            android:gravity="top" />
+            android:gravity="top"
+            android:layout_marginTop="16dp" />
 
-        <Button
-            android:id="@+id/btnSaveRecipe"
+        <!-- Save & Cancel -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Save" />
+            android:orientation="horizontal"
+            android:layout_marginTop="24dp"
+            android:gravity="end">
+
+            <Button
+                android:id="@+id/btnCancelAdd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Cancel" />
+
+            <Button
+                android:id="@+id/btnSaveRecipe"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Save"
+                android:layout_marginStart="16dp" />
+        </LinearLayout>
     </LinearLayout>
 </ScrollView>
