@@ -1,3 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">CulinaryCompanion</string>
+
+    <!-- app -->
+    <string name="app_name">Culinary Companion</string>
+
+    <!-- Dashboard -->
+    <string name="new_recipe">New Recipe</string>
+    <string name="add_recipe">Add Recipe</string>
+
+    <!-- Add / Edit Recipe -->
+    <string name="recipe_name">Recipe Name</string>
+    <string name="ingredients">Ingredients</string>
+    <string name="instructions">Instructions</string>
+    <string name="save">Save</string>
+    <string name="edit_recipe">Edit Recipe</string>
+    <string name="delete_recipe">Delete Recipe</string>
+
+    <!-- Recipe Detail -->
+    <string name="recipe_detail">Recipe Detail</string>
+
+    <!-- Filter screen -->
+    <string name="filter">Filter</string>
+    <string name="category_breakfast">Breakfast</string>
+    <string name="category_brunch">Brunch</string>
+    <string name="category_lunch">Lunch</string>
+    <string name="category_dinner">Dinner</string>
+    <string name="category_dessert">Dessert</string>
+    <string name="category_other">Other</string>
+    <string name="apply_filter">Apply Filter</string>
+    <string name="clear_filter">Clear Filter</string>
+
+    <!-- Delete confirmation dialog -->
+    <string name="delete_this_recipe">Delete this Recipe?</string>
+    <string name="delete_confirmation_text">
+        Are you sure you want to delete this recipe? This action cannot be undone.
+    </string>
+    <string name="delete">Delete</string>
+    <string name="cancel">Cancel</string>
+
 </resources>

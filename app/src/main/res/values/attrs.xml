@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- so layouts using ?attr/colorBackground compile -->
+    <attr name="colorBackground" format="reference|color"/>
+
+    <!-- so layouts using ?attr/materialCheckboxStyle compile -->
+    <attr name="materialCheckboxStyle" format="reference"/>
+</resources>

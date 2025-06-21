@@ -1,37 +1,42 @@
 package com.example.culinarycompanion
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.culinarycompanion.databinding.ItemRecipeBinding
+
+data class Recipe(val id: Long, val name: String, val category: String)
 
 class RecipeAdapter(
-    private var recipes: List<Recipe>,
     private val onClick: (Recipe) -> Unit
-) : RecyclerView.Adapter<RecipeAdapter.ViewHolder>() {
+) : RecyclerView.Adapter<RecipeAdapter.VH>() {
 
-    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val name = itemView.findViewById<TextView>(R.id.tvRecipeName)
-        private val cat  = itemView.findViewById<TextView>(R.id.tvCategory)
-        fun bind(r: Recipe) {
-            name.text = r.name
-            cat.text  = r.category
-            itemView.setOnClickListener { onClick(r) }
-        }
+    private val items = mutableListOf<Recipe>()
+
+    fun submitList(list: List<Recipe>) {
+        items.clear()
+        items += list
+        notifyDataSetChanged()
     }
 
-    override fun onCreateViewHolder(p: ViewGroup, viewType: Int) = ViewHolder(
-        LayoutInflater.from(p.context).inflate(R.layout.item_recipe, p, false)
-    )
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH {
+        val binding = ItemRecipeBinding.inflate(
+            LayoutInflater.from(parent.context), parent, false
+        )
+        return VH(binding)
+    }
 
-    override fun getItemCount() = recipes.size
+    override fun getItemCount() = items.size
 
-    override fun onBindViewHolder(h: ViewHolder, pos: Int) = h.bind(recipes[pos])
+    override fun onBindViewHolder(holder: VH, position: Int) {
+        holder.bind(items[position])
+    }
 
-    /** Call this to refresh list from LiveData */
-    fun setRecipes(newList: List<Recipe>) {
-        recipes = newList
-        notifyDataSetChanged()
+    inner class VH(private val b: ItemRecipeBinding) : RecyclerView.ViewHolder(b.root) {
+        fun bind(r: Recipe) {
+            b.tvRecipeName.text = r.name
+            b.tvCategory.text = r.category
+            b.root.setOnClickListener { onClick(r) }
+        }
     }
 }

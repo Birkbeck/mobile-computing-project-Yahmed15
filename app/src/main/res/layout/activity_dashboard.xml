@@ -3,98 +3,44 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/coordinatorDashboard"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/colorBackground"
     tools:context=".DashboardActivity">
 
-    <!-- App bar with logo, title and home navigation -->
-    <com.google.android.material.appbar.AppBarLayout
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        style="@style/Widget.MaterialComponents.Toolbar.Primary"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:title="@string/app_name" />
+
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/chipGroupCategories"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="?attr/actionBarTheme">
+        android:layout_marginTop="?attr/actionBarSize"
+        app:singleLine="true"
+        app:chipSpacingHorizontal="8dp"
+        android:padding="8dp"
+        tools:listitem="@layout/chip_item_choice" />
 
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/toolbarDashboard"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:logo="@drawable/ic_logo"
-            app:title="Culinary Companion"
-            app:titleTextColor="?attr/colorOnPrimary"
-            app:navigationIcon="@drawable/ic_baseline_home_24"
-            android:background="?attr/colorPrimary" />
-
-        <!-- Category chips inside the AppBarLayout -->
-        <com.google.android.material.chip.ChipGroup
-            android:id="@+id/chipGroupCategories"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:singleLine="true"
-            app:chipSpacing="8dp"
-            app:layout_scrollFlags="scroll|enterAlways">
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chipBreakfast"
-                style="@style/Widget.MaterialComponents.Chip.Choice"
-                android:text="Breakfast"
-                app:checkable="true" />
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chipBrunch"
-                style="@style/Widget.MaterialComponents.Chip.Choice"
-                android:text="Brunch"
-                app:checkable="true" />
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chipLunch"
-                style="@style/Widget.MaterialComponents.Chip.Choice"
-                android:text="Lunch"
-                app:checkable="true" />
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chipDinner"
-                style="@style/Widget.MaterialComponents.Chip.Choice"
-                android:text="Dinner"
-                app:checkable="true" />
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chipDesserts"
-                style="@style/Widget.MaterialComponents.Chip.Choice"
-                android:text="Desserts"
-                app:checkable="true" />
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chipOther"
-                style="@style/Widget.MaterialComponents.Chip.Choice"
-                android:text="Other"
-                app:checkable="true" />
-
-        </com.google.android.material.chip.ChipGroup>
-
-    </com.google.android.material.appbar.AppBarLayout>
-
-    <!-- Recipe list, scrolls under the AppBar -->
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recipeRecyclerView"
+        android:id="@+id/recyclerViewRecipes"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:clipToPadding="false"
-        android:paddingTop="8dp"
-        android:paddingBottom="72dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:listitem="@layout/item_recipe" />
+        android:layout_marginBottom="72dp"
+        android:layout_weight="1" />
 
-    <!-- Floating Action Button for new recipes -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabAddRecipe"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:contentDescription="Add Recipe"
-        app:srcCompat="@drawable/ic_baseline_add_24"
-        app:backgroundTint="?attr/colorSecondary"
-        app:layout_anchor="@id/coordinatorDashboard"
-        app:layout_anchorGravity="bottom|end"
-        android:layout_margin="16dp" />
+        android:layout_gravity="bottom|end"
+        android:layout_margin="16dp"
+        android:contentDescription="@string/add_recipe"
+        app:srcCompat="@drawable/ic_add"
+        app:backgroundTint="?attr/colorSecondary" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
