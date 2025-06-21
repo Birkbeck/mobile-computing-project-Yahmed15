@@ -2,58 +2,80 @@ package com.example.culinarycompanion
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.button.MaterialButton
+import com.example.culinarycompanion.databinding.ActivityDashboardBinding
+import com.google.android.material.appbar.MaterialToolbar
+import com.google.android.material.chip.Chip
+import com.google.android.material.chip.ChipGroup
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class DashboardActivity : AppCompatActivity() {
+
     private lateinit var dao: RecipeDao
     private lateinit var adapter: RecipeAdapter
+    private val allRecipes = mutableListOf<Recipe>()
 
-    override fun onCreate(saved: Bundle?) {
-        super.onCreate(saved)
-        setContentView(R.layout.activity_dashboard)
+    private lateinit var binding: ActivityDashboardBinding
 
-        dao = AppDatabase.getInstance(this).recipeDao()
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        // Using ViewBinding for cleaner findViewById
+        binding = ActivityDashboardBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        // RecyclerView setup
-        val rv = findViewById<RecyclerView>(R.id.recipeRecyclerView)
+        // --- Toolbar setup ---
+        val toolbar = findViewById<MaterialToolbar>(R.id.toolbarDashboard)
+        setSupportActionBar(toolbar)
+        toolbar.setNavigationOnClickListener {
+            // Home icon / logo click → scroll to top
+            binding.recipeRecyclerView.smoothScrollToPosition(0)
+        }
+        // If you want logo itself clickable:
+        toolbar.setOnClickListener {
+            startActivity(Intent(this, DashboardActivity::class.java)
+                .apply {
+                    flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+                })
+        }
+
+        // --- RecyclerView & Adapter ---
+        val rv = binding.recipeRecyclerView
         rv.layoutManager = LinearLayoutManager(this)
-        adapter = RecipeAdapter(emptyList()) { r ->
-            val i = Intent(this, RecipeDetailActivity::class.java).apply {
-                putExtra("id", r.id)
-            }
-            startActivity(i)
+        adapter = RecipeAdapter(emptyList()) { recipe ->
+            startActivity(Intent(this, RecipeDetailActivity::class.java).apply {
+                putExtra("id", recipe.id)
+            })
         }
         rv.adapter = adapter
 
-        // Observe all recipes
+        // --- Room DAO & LiveData ---
+        dao = AppDatabase.getInstance(this).recipeDao()
         dao.getAll().observe(this) { list ->
+            allRecipes.clear()
+            allRecipes.addAll(list)
             adapter.setRecipes(list)
         }
 
-        // New Recipe button
-        findViewById<MaterialButton>(R.id.btnNewRecipe)
-            .setOnClickListener { startActivity(Intent(this, AddRecipeActivity::class.java)) }
+        // --- FAB: Add Recipe ---
+        binding.fabAddRecipe.setOnClickListener {
+            startActivity(Intent(this, AddRecipeActivity::class.java))
+        }
 
-        // Category taps
-        listOf(
-            R.id.tvCategoryBreakfast to "Breakfast",
-            R.id.tvCategoryBrunch    to "Brunch",
-            R.id.tvCategoryLunch     to "Lunch",
-            R.id.tvCategoryDinner    to "Dinner",
-            R.id.tvCategoryDessert   to "Desserts",
-            R.id.tvCategoryOther     to "Other"
-        ).forEach { (id, cat) ->
-            findViewById<TextView>(id).setOnClickListener {
-                // Launch FilterActivity
-                Intent(this, FilterActivity::class.java).also {
-                    it.putExtra("filter", cat)
-                    startActivity(it)
+        // --- Category filtering via Chips ---
+        val chipGroup = findViewById<ChipGroup>(R.id.chipGroupCategories)
+        chipGroup.setOnCheckedStateChangeListener { group, checkedIds ->
+            if (checkedIds.isEmpty()) {
+                // no filter → show all
+                adapter.setRecipes(allRecipes)
+            } else {
+                val selectedCats = checkedIds.map { id ->
+                    (group.findViewById<Chip>(id)).text.toString()
                 }
+                adapter.setRecipes(
+                    allRecipes.filter { it.category in selectedCats }
+                )
             }
         }
     }

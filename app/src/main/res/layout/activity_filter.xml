@@ -1,72 +1,127 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/scrollViewFilter"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp">
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Filter by Category"
-        android:textStyle="bold"
-        android:textSize="18sp" />
-
-    <CheckBox
-        android:id="@+id/cbBreakfast"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Breakfast"
-        android:layout_marginTop="12dp" />
-
-    <CheckBox
-        android:id="@+id/cbBrunch"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Brunch" />
-
-    <CheckBox
-        android:id="@+id/cbLunch"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Lunch" />
-
-    <CheckBox
-        android:id="@+id/cbDinner"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Dinner" />
-
-    <CheckBox
-        android:id="@+id/cbDessert"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Dessert" />
-
-    <CheckBox
-        android:id="@+id/cbOther"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Other" />
+    android:background="?attr/colorBackground"
+    android:padding="16dp"
+    tools:context=".FilterActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="end"
-        android:layout_marginTop="24dp">
+        android:orientation="vertical">
 
-        <Button
-            android:id="@+id/btnClearFilter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Clear" />
+        <!-- App Logo -->
+        <ImageView
+            android:id="@+id/imgLogoFilter"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_gravity="center"
+            android:contentDescription="App Logo"
+            android:src="@drawable/ic_logo"
+            android:layout_marginBottom="8dp"/>
 
-        <Button
-            android:id="@+id/btnApplyFilter"
-            android:layout_width="wrap_content"
+        <!-- Top App Bar with back arrow -->
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbarFilter"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Apply"
-            android:layout_marginStart="16dp" />
+            app:navigationIcon="@drawable/ic_baseline_arrow_back_24"
+            android:title="Filter Categories"
+            android:titleTextColor="?attr/colorOnPrimary"
+            android:background="?attr/colorPrimary" />
+
+        <!-- Content below toolbar -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="?attr/actionBarSize">
+
+            <!-- Heading -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Select Categories"
+                style="?attr/textAppearanceHeadline6"
+                android:layout_marginBottom="16dp" />
+
+            <!-- Category Checkboxes -->
+            <com.google.android.material.checkbox.MaterialCheckBox
+                android:id="@+id/cbBreakfast"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Breakfast"
+                style="?attr/materialCheckboxStyle" />
+
+            <com.google.android.material.checkbox.MaterialCheckBox
+                android:id="@+id/cbBrunch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Brunch"
+                style="?attr/materialCheckboxStyle"
+                android:layout_marginTop="8dp" />
+
+            <com.google.android.material.checkbox.MaterialCheckBox
+                android:id="@+id/cbLunch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Lunch"
+                style="?attr/materialCheckboxStyle"
+                android:layout_marginTop="8dp" />
+
+            <com.google.android.material.checkbox.MaterialCheckBox
+                android:id="@+id/cbDinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Dinner"
+                style="?attr/materialCheckboxStyle"
+                android:layout_marginTop="8dp" />
+
+            <com.google.android.material.checkbox.MaterialCheckBox
+                android:id="@+id/cbDessert"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Dessert"
+                style="?attr/materialCheckboxStyle"
+                android:layout_marginTop="8dp" />
+
+            <com.google.android.material.checkbox.MaterialCheckBox
+                android:id="@+id/cbOther"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Other"
+                style="?attr/materialCheckboxStyle"
+                android:layout_marginTop="8dp" />
+
+            <!-- Action Buttons -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="end"
+                android:layout_marginTop="24dp">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnClearFilter"
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Clear" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnApplyFilter"
+                    style="?attr/materialButtonStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Apply"
+                    android:layout_marginStart="16dp" />
+
+            </LinearLayout>
+        </LinearLayout>
     </LinearLayout>
-</LinearLayout>
+</ScrollView>

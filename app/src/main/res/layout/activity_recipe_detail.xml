@@ -1,82 +1,141 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
+    android:background="?attr/colorBackground"
     tools:context=".RecipeDetailActivity">
 
-    <LinearLayout
+    <!-- App Bar with back and logo -->
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbarDetail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:background="?attr/colorPrimary"
+        app:navigationIcon="@drawable/ic_baseline_arrow_back_24"
+        app:logo="@drawable/ic_logo"
+        app:title="Recipe Detail"
+        app:titleTextColor="?attr/colorOnPrimary" />
 
-        <!-- Title -->
-        <TextView
-            android:id="@+id/tvDetailRecipeTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:textSize="24sp"
-            tools:text="Spaghetti Bolognese" />
+    <!-- Content -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:padding="16dp"
+        android:layout_marginTop="?attr/actionBarSize">
 
-        <!-- Category -->
-        <TextView
-            android:id="@+id/tvDetailCategory"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            tools:text="Dinner" />
-
-        <!-- Ingredients Section -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Ingredients:"
-            android:textStyle="bold"
-            android:layout_marginTop="16dp" />
-
-        <TextView
-            android:id="@+id/tvDetailIngredients"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:text="• 200g pasta\n• 1 cup sauce" />
-
-        <!-- Instructions Section -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Instructions:"
-            android:textStyle="bold"
-            android:layout_marginTop="16dp" />
-
-        <TextView
-            android:id="@+id/tvDetailInstructions"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:text="1. Boil water...\n2. Add pasta..." />
-
-        <!-- Actions: Edit / Delete -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="end"
-            android:layout_marginTop="24dp">
+            android:orientation="vertical">
 
-            <Button
-                android:id="@+id/btnDetailEdit"
+            <!-- Title -->
+            <TextView
+                android:id="@+id/tvDetailRecipeTitle"
+                style="?attr/textAppearanceHeadline5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Spaghetti Bolognese"
+                android:textStyle="bold" />
+
+            <!-- Category -->
+            <TextView
+                android:id="@+id/tvDetailCategory"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Edit" />
+                android:layout_marginTop="4dp"
+                style="?attr/textAppearanceBody2"
+                android:text="Dinner" />
 
-            <Button
-                android:id="@+id/btnDetailDelete"
-                android:layout_width="wrap_content"
+            <!-- Ingredients Card -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Delete"
-                android:textColor="@android:color/holo_red_dark"
-                android:layout_marginStart="16dp" />
+                android:layout_marginTop="16dp"
+                app:cardCornerRadius="8dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="12dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Ingredients"
+                        style="?attr/textAppearanceSubtitle1"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvDetailIngredients"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        style="?attr/textAppearanceBody1"
+                        tools:text="• 200g pasta\n• 1 cup sauce" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Instructions Card -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:cardCornerRadius="8dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="12dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Instructions"
+                        style="?attr/textAppearanceSubtitle1"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvDetailInstructions"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        style="?attr/textAppearanceBody1"
+                        tools:text="1. Boil water...\n2. Add pasta..." />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Action Buttons -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="end"
+                android:layout_marginTop="24dp">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnDetailEdit"
+                    style="?attr/materialButtonStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Edit" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnDetailDelete"
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Delete"
+                    android:textColor="?attr/colorError"
+                    android:layout_marginStart="16dp" />
+
+            </LinearLayout>
+
         </LinearLayout>
-    </LinearLayout>
-</ScrollView>
+    </ScrollView>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

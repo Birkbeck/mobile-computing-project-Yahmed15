@@ -18,15 +18,13 @@ android {
     }
 
     compileOptions {
-        // Use Java 1.8 for both source and target
+        // Use Java 1.8
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
 
     kotlinOptions {
-        // Match the Java target
         jvmTarget = "1.8"
-        // Keep language version at 1.8
         languageVersion = "1.8"
     }
 
@@ -36,19 +34,20 @@ android {
 }
 
 dependencies {
+    val roomVersion = "2.5.1"
+
     implementation("androidx.core:core-ktx:1.10.1")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.9.0")
     implementation("androidx.recyclerview:recyclerview:1.3.1")
     implementation("org.jetbrains.kotlin:kotlin-stdlib:1.8.22")
 
-    val roomVersion = "2.5.1"
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.1")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.1")
+
     implementation("androidx.room:room-runtime:$roomVersion")
     implementation("androidx.room:room-ktx:$roomVersion")
     kapt("androidx.room:room-compiler:$roomVersion")
-
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.1")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.1")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")

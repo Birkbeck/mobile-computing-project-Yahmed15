@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/scrollViewAdd"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="?attr/colorBackground"
     android:padding="16dp"
     tools:context=".AddRecipeActivity">
 
@@ -13,62 +15,126 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <!-- Recipe Title -->
-        <EditText
-            android:id="@+id/etRecipeName"
+        <!-- App Logo -->
+        <ImageView
+            android:id="@+id/imgLogo"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_gravity="center"
+            android:contentDescription="App Logo"
+            android:src="@drawable/ic_logo"
+            android:layout_marginBottom="8dp"/>
+
+        <!-- Top App Bar with back arrow -->
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbarAdd"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Recipe Name" />
+            android:background="?attr/colorPrimary"
+            app:navigationIcon="@drawable/ic_baseline_arrow_back_24"
+            app:title="Add Recipe"
+            app:titleTextColor="?attr/colorOnPrimary" />
 
-        <!-- Category Selector -->
-        <Spinner
-            android:id="@+id/spinnerCategory"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp" />
-
-        <!-- Ingredients Input -->
-        <EditText
-            android:id="@+id/etIngredients"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Ingredients"
-            android:inputType="textMultiLine"
-            android:minLines="4"
-            android:gravity="top"
-            android:layout_marginTop="8dp" />
-
-        <!-- Instructions Input -->
-        <EditText
-            android:id="@+id/etInstructions"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Instructions"
-            android:inputType="textMultiLine"
-            android:minLines="6"
-            android:gravity="top"
-            android:layout_marginTop="8dp" />
-
-        <!-- Actions -->
+        <!-- Content below toolbar -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="end"
-            android:layout_marginTop="16dp">
+            android:orientation="vertical"
+            android:layout_marginTop="?attr/actionBarSize">
 
-            <Button
-                android:id="@+id/btnCancelAdd"
-                android:layout_width="wrap_content"
+            <!-- Recipe Title -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Cancel" />
+                android:hint="Recipe Name"
+                style="?attr/textInputStyle">
 
-            <Button
-                android:id="@+id/btnSaveRecipe"
-                android:layout_width="wrap_content"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etRecipeName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Category Selector -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Save"
-                android:layout_marginStart="16dp" />
+                style="?attr/textInputStyle"
+                android:hint="Category"
+                app:boxBackgroundMode="outline"
+                android:layout_marginTop="8dp">
+
+                <Spinner
+                    android:id="@+id/spinnerCategory"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Ingredients Input -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Ingredients"
+                style="?attr/textInputStyle"
+                app:boxBackgroundMode="outline"
+                android:layout_marginTop="8dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etIngredients"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textMultiLine"
+                    android:minLines="4"
+                    android:gravity="top" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Instructions Input -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Instructions"
+                style="?attr/textInputStyle"
+                app:boxBackgroundMode="outline"
+                android:layout_marginTop="8dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etInstructions"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textMultiLine"
+                    android:minLines="6"
+                    android:gravity="top" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Action Buttons -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="end"
+                android:layout_marginTop="16dp">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnCancelAdd"
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Cancel" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnSaveRecipe"
+                    style="?attr/materialButtonStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Save"
+                    android:layout_marginStart="16dp" />
+
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 </ScrollView>
