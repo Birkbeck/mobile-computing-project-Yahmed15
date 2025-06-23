@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Disabled state -->
+    <item
+        android:state_enabled="false"
+        android:drawable="@color/grey_400" />
+
+    <!-- Pressed state (darker purple) -->
+    <item
+        android:state_pressed="true"
+        android:drawable="@color/purple_700" />
+
+    <!-- Default state -->
+    <item
+        android:drawable="@color/purple_500" />
+
+</selector>
