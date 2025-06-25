@@ -2,13 +2,12 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/dashboard_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <!-- RecyclerView listing recipes -->
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
+        android:id="@+id/recyclerRecipes"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="16dp"
