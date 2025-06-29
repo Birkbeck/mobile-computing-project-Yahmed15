@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="category_array">
+        <item>@string/category_breakfast</item>
+        <item>@string/category_brunch</item>
+        <item>@string/category_lunch</item>
+        <item>@string/category_dinner</item>
+        <item>@string/category_dessert</item>
+        <item>@string/category_other</item>
+    </string-array>
+</resources>

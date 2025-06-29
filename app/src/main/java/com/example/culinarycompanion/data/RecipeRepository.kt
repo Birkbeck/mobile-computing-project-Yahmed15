@@ -1,4 +1,3 @@
-// app/src/main/java/com/example/culinarycompanion/data/RecipeRepository.kt
 package com.example.culinarycompanion.data
 
 import kotlinx.coroutines.flow.Flow
@@ -10,6 +9,9 @@ class RecipeRepository(private val dao: RecipeDao) {
 
     fun getRecipeById(id: Long): Flow<Recipe> =
         dao.getById(id)
+
+    fun getRecipesByCategory(category: String): Flow<List<Recipe>> =
+        dao.getByCategory(category)
 
     suspend fun insert(recipe: Recipe) =
         dao.insert(recipe)

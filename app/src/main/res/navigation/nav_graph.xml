@@ -8,9 +8,15 @@
         android:id="@+id/dashboardFragment"
         android:name="com.example.culinarycompanion.ui.DashboardFragment"
         android:label="Dashboard">
+        <!-- Navigate to Add Recipe screen -->
         <action
             android:id="@+id/action_dashboard_to_addRecipe"
             app:destination="@id/addRecipeFragment" />
+        <!-- Navigate to Filter screen -->
+        <action
+            android:id="@+id/action_dashboard_to_filter"
+            app:destination="@id/filterFragment" />
+        <!-- Navigate to Recipe Detail screen -->
         <action
             android:id="@+id/action_dashboard_to_detail"
             app:destination="@id/recipeDetailFragment">
@@ -24,6 +30,11 @@
         android:id="@+id/addRecipeFragment"
         android:name="com.example.culinarycompanion.ui.AddRecipeFragment"
         android:label="Add Recipe" />
+
+    <fragment
+        android:id="@+id/filterFragment"
+        android:name="com.example.culinarycompanion.ui.FilterFragment"
+        android:label="Filter" />
 
     <fragment
         android:id="@+id/recipeDetailFragment"
