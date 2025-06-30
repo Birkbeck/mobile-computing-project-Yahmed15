@@ -10,29 +10,27 @@ import com.example.culinarycompanion.databinding.ItemRecipeBinding
 
 class RecipeListAdapter(
     private val onClick: (Recipe) -> Unit
-) : ListAdapter<Recipe, RecipeListAdapter.RecipeViewHolder>(DiffCallback) {
+) : ListAdapter<Recipe, RecipeListAdapter.ViewHolder>(DiffCallback) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecipeViewHolder {
-        val binding = ItemRecipeBinding.inflate(
-            LayoutInflater.from(parent.context),
-            parent,
-            false
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
+        ViewHolder(
+            ItemRecipeBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
         )
-        return RecipeViewHolder(binding)
-    }
 
-    override fun onBindViewHolder(holder: RecipeViewHolder, position: Int) {
-        val recipe = getItem(position)
-        holder.bind(recipe)
-    }
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) =
+        holder.bind(getItem(position))
 
-    inner class RecipeViewHolder(private val binding: ItemRecipeBinding) :
-        RecyclerView.ViewHolder(binding.root) {
+    inner class ViewHolder(private val b: ItemRecipeBinding) :
+        RecyclerView.ViewHolder(b.root) {
 
-        fun bind(recipe: Recipe) {
-            binding.tvRecipeName.text = recipe.name           // was recipe.title
-            binding.tvCategory.text = recipe.category         // new field
-            binding.root.setOnClickListener { onClick(recipe) }
+        fun bind(r: Recipe) {
+            b.tvRecipeName.text = r.name
+            b.tvCategory  .text = r.category
+            b.root.setOnClickListener { onClick(r) }
         }
     }
 
