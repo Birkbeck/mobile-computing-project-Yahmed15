@@ -9,5 +9,7 @@ data class Recipe(
     val name: String,
     val ingredients: String,
     val instructions: String,
-    val category: String          // newly added
+    val category: String,
+    // track whether this recipe is marked favorite by the current user
+    var isFavorite: Boolean = false
 )

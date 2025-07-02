@@ -21,4 +21,16 @@ class RecipeRepository(private val dao: RecipeDao) {
 
     suspend fun delete(recipe: Recipe) =
         dao.delete(recipe)
+
+    /**
+     * Returns only the recipes marked as favorite.
+     */
+    fun getFavorites(): Flow<List<Recipe>> =
+        dao.getFavorites()
+
+    /**
+     * Toggles the favorite flag for the given recipe ID.
+     */
+    suspend fun setFavorite(id: Long, fav: Boolean) =
+        dao.setFavorite(id, fav)
 }

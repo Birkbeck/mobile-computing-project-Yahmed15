@@ -1,4 +1,4 @@
-// app/src/main/java/com/example/culinarycompanion/data/RecipeDatabase.kt
+
 package com.example.culinarycompanion.data
 
 import android.content.Context

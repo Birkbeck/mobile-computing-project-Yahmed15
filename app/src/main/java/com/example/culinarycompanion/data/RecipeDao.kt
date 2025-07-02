@@ -1,11 +1,6 @@
 package com.example.culinarycompanion.data
 
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
-import androidx.room.Update
+import androidx.room.*
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -17,7 +12,10 @@ interface RecipeDao {
     fun getById(id: Long): Flow<Recipe>
 
     @Query("SELECT * FROM recipes WHERE category = :category")
-    fun getByCategory(category: String): Flow<List<Recipe>>   // newly added
+    fun getByCategory(category: String): Flow<List<Recipe>>
+
+    @Query("SELECT * FROM recipes WHERE isFavorite = 1")
+    fun getFavorites(): Flow<List<Recipe>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(recipe: Recipe)
@@ -27,4 +25,7 @@ interface RecipeDao {
 
     @Delete
     suspend fun delete(recipe: Recipe)
+
+    @Query("UPDATE recipes SET isFavorite = :fav WHERE id = :id")
+    suspend fun setFavorite(id: Long, fav: Boolean)
 }
