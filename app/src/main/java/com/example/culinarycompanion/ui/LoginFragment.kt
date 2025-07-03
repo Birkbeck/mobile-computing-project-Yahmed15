@@ -6,9 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import androidx.lifecycle.ViewModelProvider
 import com.example.culinarycompanion.R
 import com.example.culinarycompanion.databinding.FragmentLoginBinding
 import com.example.culinarycompanion.viewmodel.UserViewModel
@@ -18,7 +17,8 @@ class LoginFragment : Fragment() {
     private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
 
-    private val userVM: UserViewModel by viewModels {
+    // 🚩 Share the same VM as ProfileFragment
+    private val userVM: UserViewModel by activityViewModels {
         UserViewModelFactory(requireActivity().application)
     }
 
@@ -26,22 +26,22 @@ class LoginFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ) = FragmentLoginBinding.inflate(inflater, container, false)
+    ): View = FragmentLoginBinding.inflate(inflater, container, false)
         .also { _binding = it }
         .root
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        // Toolbar back-arrow -> Dashboard
+        // Toolbar back-arrow → Dashboard
         binding.toolbar.setNavigationOnClickListener {
             findNavController().popBackStack(R.id.dashboardFragment, false)
         }
 
-        // Cancel -> Dashboard
+        // Cancel button → Dashboard
         binding.btnCancel.setOnClickListener {
             findNavController().popBackStack(R.id.dashboardFragment, false)
         }
 
-        // Forgot password feedback
+        // Forgot-password link
         binding.tvForgot.setOnClickListener {
             Toast.makeText(
                 requireContext(),
@@ -51,8 +51,9 @@ class LoginFragment : Fragment() {
         }
 
         binding.btnLogin.setOnClickListener {
-            val username = binding.etUsername.text.toString().trim()
-            val password = binding.etPassword.text.toString().trim()
+            val username = binding.etUsername.text?.toString()?.trim().orEmpty()
+            val password = binding.etPassword.text?.toString()?.trim().orEmpty()
+
             if (username.isEmpty() || password.isEmpty()) {
                 Toast.makeText(
                     requireContext(),
@@ -61,20 +62,22 @@ class LoginFragment : Fragment() {
                 ).show()
                 return@setOnClickListener
             }
-            userVM.login(username, password).observe(viewLifecycleOwner) { success ->
-                if (success) {
-                    findNavController().navigate(
-                        LoginFragmentDirections
+
+            userVM.login(username, password)
+                .observe(viewLifecycleOwner) { success ->
+                    if (success) {
+                        // Safe-args navigation to ProfileFragment
+                        val action = LoginFragmentDirections
                             .actionLoginFragmentToProfileFragment()
-                    )
-                } else {
-                    Toast.makeText(
-                        requireContext(),
-                        R.string.invalid_credentials,
-                        Toast.LENGTH_SHORT
-                    ).show()
+                        findNavController().navigate(action)
+                    } else {
+                        Toast.makeText(
+                            requireContext(),
+                            R.string.invalid_credentials,
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
                 }
-            }
         }
     }
 
