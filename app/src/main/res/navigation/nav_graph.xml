@@ -13,41 +13,32 @@
         android:label="@string/dashboard_title"
         tools:layout="@layout/fragment_dashboard">
 
-        <!-- to AddRecipe -->
         <action
             android:id="@+id/actionDashboardFragmentToAddRecipeFragment"
             app:destination="@id/addRecipeFragment" />
 
-        <!-- to Filter -->
         <action
             android:id="@+id/actionDashboardFragmentToFilterFragment"
             app:destination="@id/filterFragment" />
 
-        <!-- to Detail, with recipeId arg -->
         <action
             android:id="@+id/actionDashboardFragmentToRecipeDetailFragment"
             app:destination="@id/recipeDetailFragment">
-            <argument
-                android:name="recipeId"
-                app:argType="long" />
+            <argument android:name="recipeId" app:argType="long"/>
         </action>
 
-        <!-- to Login -->
         <action
             android:id="@+id/actionDashboardFragmentToLoginFragment"
             app:destination="@id/loginFragment" />
 
-        <!-- to Register -->
         <action
             android:id="@+id/actionDashboardFragmentToRegisterFragment"
             app:destination="@id/registerFragment" />
 
-        <!-- to Profile -->
         <action
             android:id="@+id/actionDashboardFragmentToProfileFragment"
             app:destination="@id/profileFragment" />
 
-        <!-- to Settings -->
         <action
             android:id="@+id/actionDashboardFragmentToSettingsFragment"
             app:destination="@id/settingsFragment" />
@@ -74,18 +65,12 @@
         android:label="@string/recipe_detail"
         tools:layout="@layout/fragment_recipe_detail">
 
-        <!-- received recipeId -->
-        <argument
-            android:name="recipeId"
-            app:argType="long" />
+        <argument android:name="recipeId" app:argType="long"/>
 
-        <!-- to Edit, passing recipeId through -->
         <action
             android:id="@+id/actionRecipeDetailFragmentToEditRecipeFragment"
             app:destination="@id/editRecipeFragment">
-            <argument
-                android:name="recipeId"
-                app:argType="long" />
+            <argument android:name="recipeId" app:argType="long"/>
         </action>
     </fragment>
 
@@ -95,9 +80,7 @@
         android:name="com.example.culinarycompanion.ui.EditRecipeFragment"
         android:label="@string/edit_recipe"
         tools:layout="@layout/fragment_edit_recipe">
-        <argument
-            android:name="recipeId"
-            app:argType="long" />
+        <argument android:name="recipeId" app:argType="long"/>
     </fragment>
 
     <!-- LOGIN -->
@@ -107,6 +90,7 @@
         android:label="@string/login"
         tools:layout="@layout/fragment_login">
 
+        <!-- On success → Profile, clearing Login -->
         <action
             android:id="@+id/actionLoginFragmentToProfileFragment"
             app:destination="@id/profileFragment"
@@ -116,6 +100,13 @@
         <action
             android:id="@+id/actionLoginFragmentToRegisterFragment"
             app:destination="@id/registerFragment" />
+
+        <!-- Cancel → Dashboard -->
+        <action
+            android:id="@+id/actionLoginFragmentToDashboardFragment"
+            app:destination="@id/dashboardFragment"
+            app:popUpTo="@id/loginFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 
     <!-- REGISTER -->
@@ -125,6 +116,7 @@
         android:label="@string/register"
         tools:layout="@layout/fragment_register">
 
+        <!-- On success → Profile, clearing Register -->
         <action
             android:id="@+id/actionRegisterFragmentToProfileFragment"
             app:destination="@id/profileFragment"
@@ -134,6 +126,13 @@
         <action
             android:id="@+id/actionRegisterFragmentToLoginFragment"
             app:destination="@id/loginFragment" />
+
+        <!-- Cancel → Dashboard -->
+        <action
+            android:id="@+id/actionRegisterFragmentToDashboardFragment"
+            app:destination="@id/dashboardFragment"
+            app:popUpTo="@id/registerFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 
     <!-- PROFILE -->
@@ -146,10 +145,22 @@
         <action
             android:id="@+id/actionProfileFragmentToRecipeDetailFragment"
             app:destination="@id/recipeDetailFragment">
-            <argument
-                android:name="recipeId"
-                app:argType="long" />
+            <argument android:name="recipeId" app:argType="long"/>
         </action>
+
+        <!-- Logout → Login, clearing Profile -->
+        <action
+            android:id="@+id/actionProfileFragmentToLoginFragment"
+            app:destination="@id/loginFragment"
+            app:popUpTo="@id/profileFragment"
+            app:popUpToInclusive="true" />
+
+        <!-- Back → Dashboard -->
+        <action
+            android:id="@+id/actionProfileFragmentToDashboardFragment"
+            app:destination="@id/dashboardFragment"
+            app:popUpTo="@id/profileFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 
     <!-- SETTINGS -->

@@ -11,7 +11,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.culinarycompanion.R
 import com.example.culinarycompanion.databinding.FragmentProfileBinding
-import com.example.culinarycompanion.ui.ProfileFragmentDirections
 import com.example.culinarycompanion.viewmodel.RecipeViewModel
 import com.example.culinarycompanion.viewmodel.UserViewModel
 
@@ -29,22 +28,29 @@ class ProfileFragment : Fragment() {
     private lateinit var favoritesAdapter: FavoriteRecipesAdapter
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View = FragmentProfileBinding.inflate(inflater, container, false)
-        .also { _binding = it }
-        .root
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentProfileBinding.inflate(inflater, container, false)
+        return binding.root
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        // Toolbar back-arrow → Dashboard
+        // Toolbar Back → Dashboard
         binding.toolbar.setNavigationOnClickListener {
-            findNavController().popBackStack(R.id.dashboardFragment, false)
+            findNavController().navigate(
+                ProfileFragmentDirections.actionProfileFragmentToDashboardFragment()
+            )
         }
-        // explicit back button → Dashboard
+        // Explicit Back → Dashboard
         binding.btnBackToDashboard.setOnClickListener {
-            findNavController().popBackStack(R.id.dashboardFragment, false)
+            findNavController().navigate(
+                ProfileFragmentDirections.actionProfileFragmentToDashboardFragment()
+            )
         }
 
-        // set up favorites carousel
+        // Setup favorites carousel
         favoritesAdapter = FavoriteRecipesAdapter { recipe ->
             val action = ProfileFragmentDirections
                 .actionProfileFragmentToRecipeDetailFragment(recipe.id)
@@ -52,34 +58,36 @@ class ProfileFragment : Fragment() {
         }
         binding.rvFavorites.apply {
             layoutManager = LinearLayoutManager(
-                requireContext(),
-                LinearLayoutManager.HORIZONTAL,
-                false
+                requireContext(), LinearLayoutManager.HORIZONTAL, false
             )
             adapter = favoritesAdapter
         }
 
-        // observe and display user info
+        // Observe & display user info
         userVM.currentUser.observe(viewLifecycleOwner) { user ->
             if (user != null) {
                 binding.tvFullName.text = user.fullName
                 binding.tvUsername.text = user.username
-                binding.tvEmail   .text = user.email
+                binding.tvEmail.text = user.email
             } else {
-                // no user → kick back to login
-                findNavController().popBackStack(R.id.loginFragment, false)
+                // not logged in → go to Login
+                findNavController().navigate(
+                    ProfileFragmentDirections.actionProfileFragmentToLoginFragment()
+                )
             }
         }
 
-        // show only favorites
+        // Show only favorites
         recipeVM.allRecipes.observe(viewLifecycleOwner) { list ->
             favoritesAdapter.submitList(list.filter { it.isFavorite })
         }
 
-        // logout → clear VM + go to login
+        // Logout → clears user & nav to Login
         binding.btnLogout.setOnClickListener {
             userVM.logout()
-            findNavController().popBackStack(R.id.loginFragment, false)
+            findNavController().navigate(
+                ProfileFragmentDirections.actionProfileFragmentToLoginFragment()
+            )
         }
     }
 
