@@ -1,101 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app   ="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
     <data/>
-    <LinearLayout
-        android:orientation="vertical"
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        tools:context=".ui.EditRecipeFragment">
 
-        <!-- Top app bar with back arrow -->
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/toolbar"
+        <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:title="@string/edit_recipe"
-            app:titleTextColor="@android:color/white"
-            app:navigationIcon="@drawable/ic_baseline_arrow_back_24" />
+            android:layout_height="wrap_content"
+            android:theme="@style/ThemeOverlay.MaterialComponents.Dark.ActionBar">
 
-        <ScrollView
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="?attr/colorPrimary"
+                app:title="@string/edit_recipe"
+                app:titleTextColor="@android:color/white"
+                app:navigationIcon="@drawable/ic_baseline_arrow_back_24"/>
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:padding="16dp">
+            android:layout_height="match_parent"
+            android:padding="16dp"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            tools:ignore="MissingConstraints">
 
             <LinearLayout
-                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:spacing="16dp">
 
-                <!-- Category dropdown first -->
-                <Spinner
-                    android:id="@+id/spinnerCategory"
+                <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:entries="@array/category_array"
-                    android:prompt="@string/filter"
-                    android:layout_marginBottom="12dp"/>
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="4dp"
+                    android:layout_marginBottom="24dp">
 
-                <!-- Recipe Name -->
-                <EditText
-                    android:id="@+id/etName"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/recipe_name"
-                    android:inputType="textPersonName" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="16dp">
 
-                <!-- Ingredients -->
-                <EditText
-                    android:id="@+id/etIngredients"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/ingredients"
-                    android:inputType="textMultiLine"
-                    android:lines="3"
-                    android:layout_marginTop="12dp"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/categories"
+                            android:textAppearance="?attr/textAppearanceTitleMedium"
+                            android:textStyle="bold"
+                            android:layout_marginBottom="16dp"/>
 
-                <!-- Instructions -->
-                <EditText
-                    android:id="@+id/etInstructions"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/instructions"
-                    android:inputType="textMultiLine"
-                    android:lines="5"
-                    android:layout_marginTop="12dp"/>
+                        <Spinner
+                            android:id="@+id/spinnerCategory"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:entries="@array/category_array"
+                            android:layout_marginBottom="16dp"/>
 
-                <!-- Cancel / Save buttons -->
+                        <com.google.android.material.textfield.TextInputLayout
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/recipe_name"
+                            android:layout_marginBottom="16dp">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/etName"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"/>
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/ingredients"
+                            android:layout_marginBottom="16dp">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/etIngredients"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:inputType="textMultiLine"
+                                android:lines="3"/>
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/instructions">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/etInstructions"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:inputType="textMultiLine"
+                                android:lines="5"/>
+                        </com.google.android.material.textfield.TextInputLayout>
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
                 <LinearLayout
-                    android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:weightSum="2">
+                    android:orientation="horizontal"
+                    android:gravity="end"
+                    android:spacing="8dp">
 
-                    <Button
+                    <com.google.android.material.button.MaterialButton
                         android:id="@+id/btnCancel"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/cancel" />
+                        android:text="@string/cancel"/>
 
-                    <Button
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnDelete"
+                        style="@style/Widget.MaterialComponents.Button.TextButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:text="@string/delete_recipe"/>
+
+                    <com.google.android.material.button.MaterialButton
                         android:id="@+id/btnSave"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
+                        style="@style/Widget.MaterialComponents.Button"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/save"
-                        android:layout_marginStart="8dp"/>
+                        android:layout_marginStart="8dp"
+                        android:text="@string/save"/>
                 </LinearLayout>
-
-                <!-- Delete button -->
-                <Button
-                    android:id="@+id/btnDelete"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/delete_recipe"
-                    android:layout_marginTop="24dp"/>
             </LinearLayout>
-        </ScrollView>
-    </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

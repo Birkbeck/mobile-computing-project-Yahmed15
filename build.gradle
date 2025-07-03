@@ -4,8 +4,12 @@ buildscript {
         mavenCentral()
     }
     dependencies {
+        // Android Gradle Plugin
         classpath "com.android.tools.build:gradle:8.1.1"
+        // Kotlin Gradle Plugin (if not already added via settings.gradle pluginManagement)
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.8.20"
+        // Navigation Safe Args plugin
+        classpath "androidx.navigation:navigation-safe-args-gradle-plugin:2.6.0"
     }
 }
 
@@ -14,4 +18,8 @@ allprojects {
         google()
         mavenCentral()
     }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
 }

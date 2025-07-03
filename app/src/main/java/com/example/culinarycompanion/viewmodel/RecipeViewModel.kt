@@ -1,39 +1,27 @@
 package com.example.culinarycompanion.viewmodel
 
-import android.content.Context
+import android.app.Application
 import androidx.lifecycle.*
+import com.example.culinarycompanion.data.AppDatabase
 import com.example.culinarycompanion.data.Recipe
-import com.example.culinarycompanion.data.RecipeDatabase
 import com.example.culinarycompanion.data.RecipeRepository
+import kotlinx.coroutines.launch
 
-class RecipeViewModel(private val repository: RecipeRepository) : ViewModel() {
+class RecipeViewModel(app: Application) : AndroidViewModel(app) {
+  private val repo = RecipeRepository(AppDatabase.getInstance(app).recipeDao())
 
-  // LiveData of all recipes
-  val allRecipes: LiveData<List<Recipe>> = repository.getAllRecipes().asLiveData()
-
-  // LiveData for a single recipe
-  fun getRecipe(id: Long): LiveData<Recipe> =
-    repository.getRecipeById(id).asLiveData()
-
-  // LiveData for a category
+  val allRecipes: LiveData<List<Recipe>> = repo.getAllRecipes().asLiveData()
   fun filterBy(category: String): LiveData<List<Recipe>> =
-    repository.getRecipesByCategory(category).asLiveData()
+    repo.getRecipesByCategory(category).asLiveData()
+  fun getRecipe(id: Long): LiveData<Recipe> =
+    repo.getRecipeById(id).asLiveData()
+  fun getFavorites(): LiveData<List<Recipe>> =
+    repo.getFavorites().asLiveData()
 
-  // wrappers around suspend functions:
-  suspend fun insert(recipe: Recipe) = repository.insert(recipe)
-  suspend fun update(recipe: Recipe) = repository.update(recipe)
-  suspend fun delete(recipe: Recipe) = repository.delete(recipe)
-
-  /** ViewModelProvider.Factory so we can pass in our Repository */
-  class Factory(private val context: Context) : ViewModelProvider.Factory {
-    @Suppress("UNCHECKED_CAST")
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-      if (modelClass.isAssignableFrom(RecipeViewModel::class.java)) {
-        val dao = RecipeDatabase.getInstance(context).recipeDao()
-        val repo = RecipeRepository(dao)
-        return RecipeViewModel(repo) as T
-      }
-      throw IllegalArgumentException("Unknown ViewModel class")
-    }
+  fun insert(r: Recipe) = viewModelScope.launch { repo.insert(r) }
+  fun update(r: Recipe) = viewModelScope.launch { repo.update(r) }
+  fun delete(r: Recipe) = viewModelScope.launch { repo.delete(r) }
+  fun setFavorite(id: Long, fav: Boolean) = viewModelScope.launch {
+    repo.setFavorite(id, fav)
   }
 }

@@ -1,4 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Theme selection -->
+    <ListPreference
+        android:key="pref_theme"
+        android:title="@string/theme"
+        android:entries="@array/theme_entries"
+        android:entryValues="@array/theme_values"
+        android:defaultValue="system_default"
+        android:dialogTitle="@string/theme"
+        android:summary="%s" />
+
+    <!-- Notifications toggle -->
+    <SwitchPreferenceCompat
+        android:key="pref_notifications"
+        android:title="@string/notifications_enabled"
+        android:summary="@string/notifications_summary"
+        android:defaultValue="true" />
 
 </PreferenceScreen>

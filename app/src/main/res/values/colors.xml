@@ -4,13 +4,15 @@
     <color name="primaryText">#212121</color>
     <!-- Secondary text color -->
     <color name="secondaryText">#757575</color>
-    <color name="accent">#03DAC5</color>
+    <color name="accent">#F6F5F8</color>
     <color name="white">#FFFFFF</color>
 
     <!-- (Optional) legacy colors -->
-    <color name="purple_200">#FFBB86FC</color>
-    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_200">#673AB7</color>
+    <color name="purple_500">#673AB7</color>
     <color name="purple_700">#FF3700B3</color>
     <color name="teal_200">#3F51B5</color>
     <color name="teal_700">#3F51B5</color>
+    <color name="colorPrimaryLight">#FFD1C4</color>  <!-- soft peach -->
+    <color name="colorPrimaryDark">#C58C8C</color>   <!-- muted rose -->
 </resources>

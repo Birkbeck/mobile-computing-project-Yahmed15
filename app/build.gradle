@@ -2,6 +2,8 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
+    // Safe Args for Navigation
+    id 'androidx.navigation.safeargs.kotlin'
 }
 
 android {
@@ -17,11 +19,12 @@ android {
 
         // required for instrumented tests
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        vectorDrawables.useSupportLibrary = true
     }
 
     buildFeatures {
-        viewBinding true      // view binding enabled
-        dataBinding true      // data binding enabled
+        viewBinding true
+        dataBinding true
     }
 
     compileOptions {
@@ -34,41 +37,40 @@ android {
     }
 
     testOptions {
-        // include Android resources in local unit tests if needed
         unitTests.includeAndroidResources = true
     }
 }
 
 dependencies {
-    // Kotlin and AndroidX core
+    // Kotlin / AndroidX core
     implementation "org.jetbrains.kotlin:kotlin-stdlib:1.8.20"
     implementation 'androidx.core:core-ktx:1.10.1'
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.9.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation 'androidx.preference:preference-ktx:1.2.0'
 
-    // Navigation components
+    // Navigation Components
     implementation "androidx.navigation:navigation-fragment-ktx:2.6.0"
     implementation "androidx.navigation:navigation-ui-ktx:2.6.0"
 
-    // Dependency injection with Koin
+    // Koin for DI
     implementation "io.insert-koin:koin-android:3.3.0"
 
-    // Room database
+    // Room
     implementation "androidx.room:room-runtime:2.4.3"
     implementation "androidx.room:room-ktx:2.4.3"
-    // Lifecycle ViewModel + LiveData KTX
+    kapt         "androidx.room:room-compiler:2.4.3"
+
+    // Lifecycle (ViewModel + LiveData)
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.6.1"
-    kapt         "androidx.room:room-compiler:2.4.3"
 
     // RecyclerView
     implementation "androidx.recyclerview:recyclerview:1.3.0"
 
-    // local unit tests (in src/test)
+    // Testing
     testImplementation 'junit:junit:4.13.2'
-
-    // instrumented Android tests (in src/androidTest)
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test:core:1.5.0'
     androidTestImplementation 'androidx.test:runner:1.5.2'

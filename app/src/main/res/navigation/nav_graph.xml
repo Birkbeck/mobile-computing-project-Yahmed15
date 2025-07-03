@@ -1,50 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
-<navigation xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app   ="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
     app:startDestination="@id/dashboardFragment">
 
+    <!-- DASHBOARD -->
     <fragment
         android:id="@+id/dashboardFragment"
         android:name="com.example.culinarycompanion.ui.DashboardFragment"
-        android:label="Dashboard">
-        <!-- Navigate to Add Recipe screen -->
+        android:label="@string/dashboard_title"
+        tools:layout="@layout/fragment_dashboard">
+
+        <!-- to AddRecipe -->
         <action
-            android:id="@+id/action_dashboard_to_addRecipe"
+            android:id="@+id/actionDashboardFragmentToAddRecipeFragment"
             app:destination="@id/addRecipeFragment" />
-        <!-- Navigate to Filter screen -->
+
+        <!-- to Filter -->
         <action
-            android:id="@+id/action_dashboard_to_filter"
+            android:id="@+id/actionDashboardFragmentToFilterFragment"
             app:destination="@id/filterFragment" />
-        <!-- Navigate to Recipe Detail screen -->
+
+        <!-- to Detail, with recipeId arg -->
         <action
-            android:id="@+id/action_dashboard_to_detail"
+            android:id="@+id/actionDashboardFragmentToRecipeDetailFragment"
             app:destination="@id/recipeDetailFragment">
             <argument
                 android:name="recipeId"
                 app:argType="long" />
         </action>
+
+        <!-- to Login -->
+        <action
+            android:id="@+id/actionDashboardFragmentToLoginFragment"
+            app:destination="@id/loginFragment" />
+
+        <!-- to Register -->
+        <action
+            android:id="@+id/actionDashboardFragmentToRegisterFragment"
+            app:destination="@id/registerFragment" />
+
+        <!-- to Profile -->
+        <action
+            android:id="@+id/actionDashboardFragmentToProfileFragment"
+            app:destination="@id/profileFragment" />
+
+        <!-- to Settings -->
+        <action
+            android:id="@+id/actionDashboardFragmentToSettingsFragment"
+            app:destination="@id/settingsFragment" />
     </fragment>
 
+    <!-- ADD RECIPE -->
     <fragment
         android:id="@+id/addRecipeFragment"
         android:name="com.example.culinarycompanion.ui.AddRecipeFragment"
-        android:label="Add Recipe" />
+        android:label="@string/add_recipe"
+        tools:layout="@layout/fragment_add_recipe" />
 
+    <!-- FILTER -->
     <fragment
         android:id="@+id/filterFragment"
         android:name="com.example.culinarycompanion.ui.FilterFragment"
-        android:label="Filter" />
+        android:label="@string/filter"
+        tools:layout="@layout/fragment_filter" />
 
+    <!-- RECIPE DETAIL -->
     <fragment
         android:id="@+id/recipeDetailFragment"
         android:name="com.example.culinarycompanion.ui.RecipeDetailFragment"
-        android:label="Recipe Details">
+        android:label="@string/recipe_detail"
+        tools:layout="@layout/fragment_recipe_detail">
+
+        <!-- received recipeId -->
         <argument
             android:name="recipeId"
             app:argType="long" />
+
+        <!-- to Edit, passing recipeId through -->
         <action
-            android:id="@+id/action_detail_to_editRecipe"
+            android:id="@+id/actionRecipeDetailFragmentToEditRecipeFragment"
             app:destination="@id/editRecipeFragment">
             <argument
                 android:name="recipeId"
@@ -52,9 +89,73 @@
         </action>
     </fragment>
 
+    <!-- EDIT RECIPE -->
     <fragment
         android:id="@+id/editRecipeFragment"
         android:name="com.example.culinarycompanion.ui.EditRecipeFragment"
-        android:label="Edit Recipe" />
+        android:label="@string/edit_recipe"
+        tools:layout="@layout/fragment_edit_recipe">
+        <argument
+            android:name="recipeId"
+            app:argType="long" />
+    </fragment>
 
+    <!-- LOGIN -->
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.example.culinarycompanion.ui.LoginFragment"
+        android:label="@string/login"
+        tools:layout="@layout/fragment_login">
+
+        <action
+            android:id="@+id/actionLoginFragmentToProfileFragment"
+            app:destination="@id/profileFragment"
+            app:popUpTo="@id/loginFragment"
+            app:popUpToInclusive="true" />
+
+        <action
+            android:id="@+id/actionLoginFragmentToRegisterFragment"
+            app:destination="@id/registerFragment" />
+    </fragment>
+
+    <!-- REGISTER -->
+    <fragment
+        android:id="@+id/registerFragment"
+        android:name="com.example.culinarycompanion.ui.RegisterFragment"
+        android:label="@string/register"
+        tools:layout="@layout/fragment_register">
+
+        <action
+            android:id="@+id/actionRegisterFragmentToProfileFragment"
+            app:destination="@id/profileFragment"
+            app:popUpTo="@id/registerFragment"
+            app:popUpToInclusive="true" />
+
+        <action
+            android:id="@+id/actionRegisterFragmentToLoginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
+
+    <!-- PROFILE -->
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.example.culinarycompanion.ui.ProfileFragment"
+        android:label="@string/my_profile"
+        tools:layout="@layout/fragment_profile">
+
+        <action
+            android:id="@+id/actionProfileFragmentToRecipeDetailFragment"
+            app:destination="@id/recipeDetailFragment">
+            <argument
+                android:name="recipeId"
+                app:argType="long" />
+        </action>
+    </fragment>
+
+    <!-- SETTINGS -->
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.example.culinarycompanion.ui.SettingsFragment"
+        android:label="@string/settings"
+        tools:layout="@layout/fragment_settings" />
 </navigation>

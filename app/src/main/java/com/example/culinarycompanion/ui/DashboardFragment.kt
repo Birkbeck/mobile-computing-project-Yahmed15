@@ -1,79 +1,105 @@
 package com.example.culinarycompanion.ui
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.core.os.bundleOf
+import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.lifecycle.ViewModelProvider
 import com.example.culinarycompanion.R
 import com.example.culinarycompanion.databinding.FragmentDashboardBinding
 import com.example.culinarycompanion.viewmodel.RecipeViewModel
+import kotlinx.coroutines.launch
 
 class DashboardFragment : Fragment() {
-
     private var _binding: FragmentDashboardBinding? = null
     private val binding get() = _binding!!
 
     private val viewModel: RecipeViewModel by activityViewModels {
-        RecipeViewModel.Factory(requireContext())
+        ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().application)
     }
-
     private lateinit var adapter: RecipeListAdapter
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentDashboardBinding.inflate(inflater, container, false)
-        return binding.root
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
     }
 
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+    ): View = FragmentDashboardBinding.inflate(inflater, container, false)
+        .also { _binding = it }
+        .root
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        // RecyclerView setup
-        adapter = RecipeListAdapter { r ->
-            findNavController().navigate(
-                R.id.action_dashboard_to_detail,
-                bundleOf("recipeId" to r.id)
-            )
-        }
+        adapter = RecipeListAdapter(
+            onClick = { r ->
+                val action = DashboardFragmentDirections
+                    .actionDashboardFragmentToRecipeDetailFragment(r.id)
+                findNavController().navigate(action)
+            },
+            onFavoriteClick = { r ->
+                lifecycleScope.launch {
+                    viewModel.setFavorite(r.id, !r.isFavorite)
+                }
+            }
+        )
+
         binding.rvRecipes.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = this@DashboardFragment.adapter
         }
 
-        // Observe all recipes
         viewModel.allRecipes.observe(viewLifecycleOwner) {
             adapter.submitList(it)
         }
 
-        // + button
         binding.btnNewRecipe.setOnClickListener {
-            findNavController().navigate(R.id.action_dashboard_to_addRecipe)
+            findNavController().navigate(
+                DashboardFragmentDirections.actionDashboardFragmentToAddRecipeFragment()
+            )
         }
         binding.btnFilter.setOnClickListener {
-            findNavController().navigate(R.id.action_dashboard_to_filter)
+            findNavController().navigate(
+                DashboardFragmentDirections.actionDashboardFragmentToFilterFragment()
+            )
+        }
+        binding.chipGroupCategories.setOnCheckedChangeListener { group, checkedId ->
+            val source = if (checkedId == View.NO_ID) {
+                viewModel.allRecipes
+            } else {
+                val chip = group.findViewById<com.google.android.material.chip.Chip>(checkedId)
+                viewModel.filterBy(chip.text.toString())
+            }
+            source.observe(viewLifecycleOwner) { adapter.submitList(it) }
         }
 
-        // Category chips
-        binding.chipGroupCategories.setOnCheckedChangeListener { _, id ->
-            val live = when (id) {
-                R.id.chipBreakfast -> viewModel.filterBy("Breakfast")
-                R.id.chipBrunch    -> viewModel.filterBy("Brunch")
-                R.id.chipLunch     -> viewModel.filterBy("Lunch")
-                R.id.chipDinner    -> viewModel.filterBy("Dinner")
-                R.id.chipDessert   -> viewModel.filterBy("Dessert")
-                R.id.chipOther     -> viewModel.filterBy("Other")
-                else               -> viewModel.allRecipes
-            }
-            live.observe(viewLifecycleOwner) { filtered ->
-                adapter.submitList(filtered)
-            }
+        binding.btnProfile.setOnClickListener {
+            findNavController().navigate(
+                DashboardFragmentDirections.actionDashboardFragmentToProfileFragment()
+            )
         }
+        binding.btnLogin.setOnClickListener {
+            findNavController().navigate(
+                DashboardFragmentDirections.actionDashboardFragmentToLoginFragment()
+            )
+        }
+        binding.btnRegister.setOnClickListener {
+            findNavController().navigate(
+                DashboardFragmentDirections.actionDashboardFragmentToRegisterFragment()
+            )
+        }
+        binding.fabSettings.setOnClickListener {
+            findNavController().navigate(
+                DashboardFragmentDirections.actionDashboardFragmentToSettingsFragment()
+            )
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.dash_menu, menu)
     }
 
     override fun onDestroyView() {

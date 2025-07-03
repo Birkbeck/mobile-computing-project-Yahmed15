@@ -1,3 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!--
+      This MUST be a MaterialComponents theme.
+      You can choose DarkActionBar if you want an action bar,
+      but NoActionBar is the most common for AppCompatActivity + Toolbar.
+    -->
+    <style name="Theme.CulinaryCompanion"
+        parent="Theme.MaterialComponents.DayNight.NoActionBar">
+
+        <!-- Primary branding -->
+        <item name="colorPrimary">@color/purple_200</item>
+        <item name="colorPrimaryVariant">@color/purple_700</item>
+        <item name="colorOnPrimary">@color/black</item>
+
+        <!-- Secondary branding -->
+        <item name="colorSecondary">@color/teal_200</item>
+        <item name="colorOnSecondary">@color/black</item>
+
+        <!-- Status bar color -->
+        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+    </style>
 </resources>

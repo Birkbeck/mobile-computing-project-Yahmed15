@@ -1,5 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <!-- For the Settings “Theme” ListPreference -->
+    <string-array name="theme_entries">
+        <item>@string/theme_light</item>
+        <item>@string/theme_dark</item>
+        <item>@string/theme_system_default</item>
+    </string-array>
+    <string-array name="theme_values">
+        <item>light</item>
+        <item>dark</item>
+        <item>system_default</item>
+    </string-array>
+
+    <!-- (Your existing recipe-category spinner array) -->
     <string-array name="category_array">
         <item>@string/category_breakfast</item>
         <item>@string/category_brunch</item>
@@ -8,4 +22,5 @@
         <item>@string/category_dessert</item>
         <item>@string/category_other</item>
     </string-array>
+
 </resources>

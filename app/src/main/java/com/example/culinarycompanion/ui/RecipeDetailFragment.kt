@@ -4,11 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
 import com.example.culinarycompanion.R
 import com.example.culinarycompanion.data.Recipe
@@ -20,18 +19,11 @@ class RecipeDetailFragment : Fragment() {
     private var _binding: FragmentRecipeDetailBinding? = null
     private val binding get() = _binding!!
 
-    // pull in the ViewModel
-    private val viewModel: RecipeViewModel by viewModels {
-        RecipeViewModel.Factory(requireContext())
+    // ViewModel via AndroidViewModelFactory
+    private val recipeVM: RecipeViewModel by activityViewModels {
+        ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().application)
     }
-
-    // will hold the recipeId passed via nav
-    private var recipeId: Long = -1L
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        recipeId = arguments?.getLong("recipeId", -1L) ?: -1L
-    }
+    private lateinit var recipe: Recipe
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,33 +34,58 @@ class RecipeDetailFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        // back arrow
+        // Toolbar back → Dashboard
         binding.toolbar.setNavigationOnClickListener {
-            findNavController().navigateUp()
+            findNavController().popBackStack(R.id.dashboardFragment, false)
         }
 
-        // observe the recipe by ID
-        viewModel.getRecipe(recipeId).observe(viewLifecycleOwner) { recipe: Recipe? ->
-            if (recipe != null) {
-                binding.recipeIdText.text     = getString(R.string.recipe_detail) + " #${recipe.id}"
-                binding.titleText.text        = recipe.name
-                binding.ingredientsText.text  = recipe.ingredients
-                binding.instructionsText.text = recipe.instructions
+        // Back button below → Dashboard
+        binding.btnBackToDashboard.setOnClickListener {
+            findNavController().popBackStack(R.id.dashboardFragment, false)
+        }
 
-                // edit → EditRecipeFragment
-                binding.editButton.setOnClickListener {
-                    findNavController().navigate(
-                        R.id.action_detail_to_editRecipe,
-                        bundleOf("recipeId" to recipe.id)
-                    )
-                }
-                // delete → pop back after removing
-                binding.deleteButton.setOnClickListener {
+        // Load recipe
+        val id = arguments?.getLong("recipeId") ?: return
+        recipeVM.getRecipe(id).observe(viewLifecycleOwner) { r ->
+            recipe = r
+            binding.titleText.text =
+                r.name
+            binding.recipeIdText.text =
+                getString(R.string.recipe_id_format, r.id)
+            binding.ingredientsText.text = r.ingredients
+            binding.instructionsText.text = r.instructions
+
+            // Favorite toggle
+            binding.btnFavorite.apply {
+                setIconResource(
+                    if (r.isFavorite) R.drawable.ic_favorite_filled
+                    else R.drawable.ic_favorite_border
+                )
+                setOnClickListener {
+                    r.isFavorite = !r.isFavorite
                     lifecycleScope.launch {
-                        viewModel.delete(recipe)
-                        findNavController().navigateUp()
+                        recipeVM.setFavorite(r.id, r.isFavorite)
+                        setIconResource(
+                            if (r.isFavorite) R.drawable.ic_favorite_filled
+                            else R.drawable.ic_favorite_border
+                        )
                     }
                 }
+            }
+        }
+
+        // Edit
+        binding.editButton.setOnClickListener {
+            val action = RecipeDetailFragmentDirections
+                .actionRecipeDetailFragmentToEditRecipeFragment(recipe.id)
+            findNavController().navigate(action)
+        }
+
+        // Delete → and back to dashboard
+        binding.deleteButton.setOnClickListener {
+            lifecycleScope.launch {
+                recipeVM.delete(recipe)
+                findNavController().popBackStack(R.id.dashboardFragment, false)
             }
         }
     }
