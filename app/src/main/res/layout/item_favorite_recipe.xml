@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app   ="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
         <variable
@@ -36,6 +36,7 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_marginTop="4dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
                 android:contentDescription="@string/favorite"
                 app:srcCompat="@drawable/ic_favorite_filled"
                 app:tint="?attr/colorPrimary"/>

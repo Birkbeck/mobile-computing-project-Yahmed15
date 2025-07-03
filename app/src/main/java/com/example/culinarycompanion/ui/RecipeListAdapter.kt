@@ -5,7 +5,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.culinarycompanion.R
 import com.example.culinarycompanion.data.Recipe
 import com.example.culinarycompanion.databinding.ItemRecipeBinding
 
@@ -17,7 +16,9 @@ class RecipeListAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         ViewHolder(
             ItemRecipeBinding.inflate(
-                LayoutInflater.from(parent.context), parent, false
+                LayoutInflater.from(parent.context),
+                parent,
+                false
             ),
             onClick,
             onFavoriteClick
@@ -27,28 +28,17 @@ class RecipeListAdapter(
         holder.bind(getItem(position))
 
     class ViewHolder(
-        private val b: ItemRecipeBinding,
+        private val binding: ItemRecipeBinding,
         private val onClick: (Recipe) -> Unit,
         private val onFavoriteClick: (Recipe) -> Unit
-    ) : RecyclerView.ViewHolder(b.root) {
-
+    ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(recipe: Recipe) {
-            b.recipe = recipe
-            b.root.setOnClickListener { onClick(recipe) }
-            b.btnFavorite.setOnClickListener {
-                recipe.isFavorite = !recipe.isFavorite
-                b.btnFavorite.setImageResource(
-                    if (recipe.isFavorite) R.drawable.ic_favorite_filled
-                    else R.drawable.ic_favorite_border
-                )
-                onFavoriteClick(recipe)
-            }
-            // reflect current state:
-            b.btnFavorite.setImageResource(
-                if (recipe.isFavorite) R.drawable.ic_favorite_filled
-                else R.drawable.ic_favorite_border
-            )
-            b.executePendingBindings()
+            binding.recipe = recipe
+            // card click → detail
+            binding.root.setOnClickListener { onClick(recipe) }
+            // heart click → toggle
+            binding.btnFavorite.setOnClickListener { onFavoriteClick(recipe) }
+            binding.executePendingBindings()
         }
     }
 

@@ -39,7 +39,7 @@
                 android:text="@{recipe.category}"
                 android:textAppearance="?attr/textAppearanceBody2"/>
 
-            <!-- Favorite toggle: single‐line android:src expression -->
+            <!-- Favorite toggle -->
             <ImageButton
                 android:id="@+id/btnFavorite"
                 android:layout_width="32dp"

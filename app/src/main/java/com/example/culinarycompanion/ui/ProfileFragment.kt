@@ -7,12 +7,14 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.culinarycompanion.R
 import com.example.culinarycompanion.databinding.FragmentProfileBinding
 import com.example.culinarycompanion.viewmodel.RecipeViewModel
 import com.example.culinarycompanion.viewmodel.UserViewModel
+import kotlinx.coroutines.launch
 
 class ProfileFragment : Fragment() {
     private var _binding: FragmentProfileBinding? = null
@@ -28,66 +30,62 @@ class ProfileFragment : Fragment() {
     private lateinit var favoritesAdapter: FavoriteRecipesAdapter
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentProfileBinding.inflate(inflater, container, false)
-        return binding.root
-    }
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+    ) = FragmentProfileBinding.inflate(inflater, container, false).also { _binding = it }.root
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        // Toolbar Back → Dashboard
+        // Back → Dashboard
         binding.toolbar.setNavigationOnClickListener {
-            findNavController().navigate(
-                ProfileFragmentDirections.actionProfileFragmentToDashboardFragment()
-            )
+            findNavController().popBackStack(R.id.dashboardFragment, false)
         }
-        // Explicit Back → Dashboard
         binding.btnBackToDashboard.setOnClickListener {
-            findNavController().navigate(
-                ProfileFragmentDirections.actionProfileFragmentToDashboardFragment()
-            )
+            findNavController().popBackStack(R.id.dashboardFragment, false)
         }
 
-        // Setup favorites carousel
-        favoritesAdapter = FavoriteRecipesAdapter { recipe ->
-            val action = ProfileFragmentDirections
-                .actionProfileFragmentToRecipeDetailFragment(recipe.id)
-            findNavController().navigate(action)
-        }
+        // Favorites carousel
+        favoritesAdapter = FavoriteRecipesAdapter(
+            onClick = { recipe ->
+                val action = ProfileFragmentDirections
+                    .actionProfileFragmentToRecipeDetailFragment(recipe.id)
+                findNavController().navigate(action)
+            },
+            onFavoriteClick = { recipe ->
+                // remove from favorites
+                lifecycleScope.launch {
+                    recipeVM.setFavorite(recipe.id, false)
+                }
+            }
+        )
         binding.rvFavorites.apply {
             layoutManager = LinearLayoutManager(
-                requireContext(), LinearLayoutManager.HORIZONTAL, false
+                requireContext(),
+                LinearLayoutManager.HORIZONTAL,
+                false
             )
             adapter = favoritesAdapter
         }
 
-        // Observe & display user info
+        // Show user info
         userVM.currentUser.observe(viewLifecycleOwner) { user ->
             if (user != null) {
                 binding.tvFullName.text = user.fullName
                 binding.tvUsername.text = user.username
-                binding.tvEmail.text = user.email
+                binding.tvEmail.text    = user.email
             } else {
-                // not logged in → go to Login
-                findNavController().navigate(
-                    ProfileFragmentDirections.actionProfileFragmentToLoginFragment()
-                )
+                // No user → back to login
+                findNavController().popBackStack(R.id.loginFragment, false)
             }
         }
 
-        // Show only favorites
+        // Only favorites
         recipeVM.allRecipes.observe(viewLifecycleOwner) { list ->
             favoritesAdapter.submitList(list.filter { it.isFavorite })
         }
 
-        // Logout → clears user & nav to Login
+        // Logout → clear & go to login
         binding.btnLogout.setOnClickListener {
             userVM.logout()
-            findNavController().navigate(
-                ProfileFragmentDirections.actionProfileFragmentToLoginFragment()
-            )
+            findNavController().popBackStack(R.id.loginFragment, false)
         }
     }
 
