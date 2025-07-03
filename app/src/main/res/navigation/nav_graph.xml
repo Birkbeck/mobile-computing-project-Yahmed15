@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app   ="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
     app:startDestination="@id/dashboardFragment">
@@ -14,33 +14,33 @@
         tools:layout="@layout/fragment_dashboard">
 
         <action
-            android:id="@+id/actionDashboardFragmentToAddRecipeFragment"
+            android:id="@+id/action_dashboardFragment_to_addRecipeFragment"
             app:destination="@id/addRecipeFragment" />
 
         <action
-            android:id="@+id/actionDashboardFragmentToFilterFragment"
-            app:destination="@id/filterFragment" />
-
-        <action
-            android:id="@+id/actionDashboardFragmentToRecipeDetailFragment"
+            android:id="@+id/action_dashboardFragment_to_recipeDetailFragment"
             app:destination="@id/recipeDetailFragment">
-            <argument android:name="recipeId" app:argType="long"/>
+            <argument
+                android:name="recipeId"
+                app:argType="long" />
         </action>
 
         <action
-            android:id="@+id/actionDashboardFragmentToLoginFragment"
-            app:destination="@id/loginFragment" />
+            android:id="@+id/action_dashboardFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:popUpTo="@id/dashboardFragment"
+            app:popUpToInclusive="false" />
 
         <action
-            android:id="@+id/actionDashboardFragmentToRegisterFragment"
+            android:id="@+id/action_dashboardFragment_to_registerFragment"
             app:destination="@id/registerFragment" />
 
         <action
-            android:id="@+id/actionDashboardFragmentToProfileFragment"
+            android:id="@+id/action_dashboardFragment_to_profileFragment"
             app:destination="@id/profileFragment" />
 
         <action
-            android:id="@+id/actionDashboardFragmentToSettingsFragment"
+            android:id="@+id/action_dashboardFragment_to_settingsFragment"
             app:destination="@id/settingsFragment" />
     </fragment>
 
@@ -51,38 +51,6 @@
         android:label="@string/add_recipe"
         tools:layout="@layout/fragment_add_recipe" />
 
-    <!-- FILTER -->
-    <fragment
-        android:id="@+id/filterFragment"
-        android:name="com.example.culinarycompanion.ui.FilterFragment"
-        android:label="@string/filter"
-        tools:layout="@layout/fragment_filter" />
-
-    <!-- RECIPE DETAIL -->
-    <fragment
-        android:id="@+id/recipeDetailFragment"
-        android:name="com.example.culinarycompanion.ui.RecipeDetailFragment"
-        android:label="@string/recipe_detail"
-        tools:layout="@layout/fragment_recipe_detail">
-
-        <argument android:name="recipeId" app:argType="long"/>
-
-        <action
-            android:id="@+id/actionRecipeDetailFragmentToEditRecipeFragment"
-            app:destination="@id/editRecipeFragment">
-            <argument android:name="recipeId" app:argType="long"/>
-        </action>
-    </fragment>
-
-    <!-- EDIT RECIPE -->
-    <fragment
-        android:id="@+id/editRecipeFragment"
-        android:name="com.example.culinarycompanion.ui.EditRecipeFragment"
-        android:label="@string/edit_recipe"
-        tools:layout="@layout/fragment_edit_recipe">
-        <argument android:name="recipeId" app:argType="long"/>
-    </fragment>
-
     <!-- LOGIN -->
     <fragment
         android:id="@+id/loginFragment"
@@ -90,20 +58,12 @@
         android:label="@string/login"
         tools:layout="@layout/fragment_login">
 
-        <!-- On success → Profile, clearing Login -->
         <action
-            android:id="@+id/actionLoginFragmentToProfileFragment"
-            app:destination="@id/profileFragment"
-            app:popUpTo="@id/loginFragment"
-            app:popUpToInclusive="true" />
+            android:id="@+id/action_loginFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
 
         <action
-            android:id="@+id/actionLoginFragmentToRegisterFragment"
-            app:destination="@id/registerFragment" />
-
-        <!-- Cancel → Dashboard -->
-        <action
-            android:id="@+id/actionLoginFragmentToDashboardFragment"
+            android:id="@+id/action_loginFragment_to_dashboardFragment"
             app:destination="@id/dashboardFragment"
             app:popUpTo="@id/loginFragment"
             app:popUpToInclusive="true" />
@@ -116,57 +76,132 @@
         android:label="@string/register"
         tools:layout="@layout/fragment_register">
 
-        <!-- On success → Profile, clearing Register -->
         <action
-            android:id="@+id/actionRegisterFragmentToProfileFragment"
-            app:destination="@id/profileFragment"
-            app:popUpTo="@id/registerFragment"
-            app:popUpToInclusive="true" />
-
-        <action
-            android:id="@+id/actionRegisterFragmentToLoginFragment"
+            android:id="@+id/action_registerFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
 
-        <!-- Cancel → Dashboard -->
         <action
-            android:id="@+id/actionRegisterFragmentToDashboardFragment"
-            app:destination="@id/dashboardFragment"
-            app:popUpTo="@id/registerFragment"
-            app:popUpToInclusive="true" />
+            android:id="@+id/action_registerFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
     </fragment>
 
     <!-- PROFILE -->
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.example.culinarycompanion.ui.ProfileFragment"
-        android:label="@string/my_profile"
+        android:label="@string/profile"
         tools:layout="@layout/fragment_profile">
 
         <action
-            android:id="@+id/actionProfileFragmentToRecipeDetailFragment"
+            android:id="@+id/action_profileFragment_to_recipeDetailFragment"
             app:destination="@id/recipeDetailFragment">
-            <argument android:name="recipeId" app:argType="long"/>
+            <argument
+                android:name="recipeId"
+                app:argType="long" />
         </action>
 
-        <!-- Logout → Login, clearing Profile -->
         <action
-            android:id="@+id/actionProfileFragmentToLoginFragment"
+            android:id="@+id/action_profileFragment_to_loginFragment"
             app:destination="@id/loginFragment"
-            app:popUpTo="@id/profileFragment"
-            app:popUpToInclusive="true" />
-
-        <!-- Back → Dashboard -->
-        <action
-            android:id="@+id/actionProfileFragmentToDashboardFragment"
-            app:destination="@id/dashboardFragment"
-            app:popUpTo="@id/profileFragment"
+            app:popUpTo="@id/dashboardFragment"
             app:popUpToInclusive="true" />
     </fragment>
 
-    <!-- SETTINGS -->
+    <!-- RECIPE DETAIL -->
+    <fragment
+        android:id="@+id/recipeDetailFragment"
+        android:name="com.example.culinarycompanion.ui.RecipeDetailFragment"
+        android:label="@string/recipe_detail"
+        tools:layout="@layout/fragment_recipe_detail">
+
+        <argument
+            android:name="recipeId"
+            app:argType="long" />
+
+        <action
+            android:id="@+id/action_recipeDetailFragment_to_editRecipeFragment"
+            app:destination="@id/editRecipeFragment">
+            <argument
+                android:name="recipeId"
+                app:argType="long" />
+        </action>
+    </fragment>
+
+    <!-- EDIT RECIPE -->
+    <fragment
+        android:id="@+id/editRecipeFragment"
+        android:name="com.example.culinarycompanion.ui.EditRecipeFragment"
+        android:label="@string/edit_recipe"
+        tools:layout="@layout/fragment_edit_recipe">
+
+        <argument
+            android:name="recipeId"
+            app:argType="long" />
+
+        <action
+            android:id="@+id/action_editRecipeFragment_to_recipeDetailFragment"
+            app:destination="@id/recipeDetailFragment">
+            <argument
+                android:name="recipeId"
+                app:argType="long" />
+        </action>
+    </fragment>
+
+    <!-- SETTINGS & SUPPORT -->
     <fragment
         android:id="@+id/settingsFragment"
         android:name="com.example.culinarycompanion.ui.SettingsFragment"
         android:label="@string/settings"
-        tools:layout="@layout/fragment_settings" />
+        tools:layout="@layout/fragment_settings">
+
+        <action
+            android:id="@+id/action_settingsFragment_to_faqFragment"
+            app:destination="@id/faqFragment" />
+
+        <action
+            android:id="@+id/action_settingsFragment_to_contactFragment"
+            app:destination="@id/contactFragment" />
+
+        <action
+            android:id="@+id/action_settingsFragment_to_privacyPolicyFragment"
+            app:destination="@id/privacyPolicyFragment" />
+
+        <action
+            android:id="@+id/action_settingsFragment_to_aboutFragment"
+            app:destination="@id/aboutFragment" />
+
+        <action
+            android:id="@+id/action_settingsFragment_to_dashboardFragment"
+            app:destination="@id/dashboardFragment"
+            app:popUpTo="@id/settingsFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <!-- FAQ -->
+    <fragment
+        android:id="@+id/faqFragment"
+        android:name="com.example.culinarycompanion.ui.FaqFragment"
+        android:label="@string/help_faq"
+        tools:layout="@layout/fragment_faq" />
+
+    <!-- CONTACT -->
+    <fragment
+        android:id="@+id/contactFragment"
+        android:name="com.example.culinarycompanion.ui.ContactFragment"
+        android:label="@string/contact_us"
+        tools:layout="@layout/fragment_contact" />
+
+    <!-- PRIVACY POLICY -->
+    <fragment
+        android:id="@+id/privacyPolicyFragment"
+        android:name="com.example.culinarycompanion.ui.PrivacyPolicyFragment"
+        android:label="@string/privacy_policy"
+        tools:layout="@layout/fragment_privacy_policy" />
+
+    <!-- ABOUT -->
+    <fragment
+        android:id="@+id/aboutFragment"
+        android:name="com.example.culinarycompanion.ui.AboutFragment"
+        android:label="@string/about"
+        tools:layout="@layout/fragment_about" />
 </navigation>

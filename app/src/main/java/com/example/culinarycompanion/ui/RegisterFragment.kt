@@ -8,7 +8,6 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.lifecycle.ViewModelProvider
 import com.example.culinarycompanion.R
 import com.example.culinarycompanion.databinding.FragmentRegisterBinding
 import com.example.culinarycompanion.viewmodel.UserViewModel
@@ -25,17 +24,18 @@ class RegisterFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ) = FragmentRegisterBinding.inflate(inflater, container, false)
+    ) = FragmentRegisterBinding
+        .inflate(inflater, container, false)
         .also { _binding = it }
         .root
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        // Toolbar back arrow → Dashboard
+        // back arrow → Dashboard
         binding.toolbar.setNavigationOnClickListener {
             findNavController().popBackStack(R.id.dashboardFragment, false)
         }
 
-        // Cancel button → Dashboard
+        // Cancel → Dashboard
         binding.btnCancel.setOnClickListener {
             findNavController().popBackStack(R.id.dashboardFragment, false)
         }
@@ -49,10 +49,10 @@ class RegisterFragment : Fragment() {
 
             when {
                 fullName.isEmpty() -> binding.etFullName.error = getString(R.string.required)
-                email.isEmpty()    -> binding.etEmail   .error = getString(R.string.required)
+                email   .isEmpty() -> binding.etEmail   .error = getString(R.string.required)
                 username.isEmpty() -> binding.etUsername.error = getString(R.string.required)
                 password.isEmpty() -> binding.etPassword.error = getString(R.string.required)
-                !agreed            -> Toast.makeText(
+                !agreed -> Toast.makeText(
                     requireContext(),
                     R.string.must_agree_terms,
                     Toast.LENGTH_SHORT
@@ -61,9 +61,10 @@ class RegisterFragment : Fragment() {
                     userVM.register(username, fullName, email, password)
                         .observe(viewLifecycleOwner) { newId ->
                             if (newId > 0) {
-                                // Safe-args navigation to Profile
+                                // Safe-Args → ProfileFragment
                                 findNavController().navigate(
-                                    R.id.actionRegisterFragmentToProfileFragment
+                                    RegisterFragmentDirections
+                                        .actionRegisterFragmentToProfileFragment()
                                 )
                             } else {
                                 Toast.makeText(
