@@ -109,6 +109,10 @@
     <!-- Help & FAQ -->
     <string name="help_faq">Help &amp; FAQ</string>
     <string name="help_faq_text">Here are some frequently asked questions…</string>
+    <string name="help_faq_content">Here you can place your FAQ text…</string>
+    <string name="contact_us_content">Email us at support@example.com or call 123-4567</string>
+    <string name="privacy_policy_content">Your privacy policy text goes here…</string>
+    <string name="about_content">About the app: version details, credits, etc.</string>
 
     <!-- Contact -->
     <string name="contact_subject">Support Request</string>
