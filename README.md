@@ -46,8 +46,7 @@ Or run `RecipeUnitTest.kt` directly via Android Studio.
 
 1. Clone the repo:
 
-git clone [https://github.com/YOUR_USERNAME/culinary-companion.git
-cd culinary-companion](https://github.com/Birkbeck/mobile-computing-project-Yahmed15.git)
+git clone [https://github.com/Birkbeck/mobile-computing-project-Yahmed15.git]
 
 2. Open in Android Studio (Arctic Fox or later recommended)
 
