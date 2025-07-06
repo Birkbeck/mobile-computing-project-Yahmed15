@@ -6,22 +6,45 @@ import com.example.culinarycompanion.data.AppDatabase
 import com.example.culinarycompanion.data.Recipe
 import com.example.culinarycompanion.data.RecipeRepository
 import kotlinx.coroutines.launch
+import androidx.lifecycle.asLiveData
 
-class RecipeViewModel(app: Application) : AndroidViewModel(app) {
-  private val repo = RecipeRepository(AppDatabase.getInstance(app).recipeDao())
+class RecipeViewModel(application: Application) : AndroidViewModel(application) {
 
-  val allRecipes: LiveData<List<Recipe>> = repo.getAllRecipes().asLiveData()
-  fun filterBy(category: String): LiveData<List<Recipe>> =
-    repo.getRecipesByCategory(category).asLiveData()
-  fun getRecipe(id: Long): LiveData<Recipe> =
-    repo.getRecipeById(id).asLiveData()
-  fun getFavorites(): LiveData<List<Recipe>> =
-    repo.getFavorites().asLiveData()
+  private val repository: RecipeRepository
 
-  fun insert(r: Recipe) = viewModelScope.launch { repo.insert(r) }
-  fun update(r: Recipe) = viewModelScope.launch { repo.update(r) }
-  fun delete(r: Recipe) = viewModelScope.launch { repo.delete(r) }
+  val allRecipes: LiveData<List<Recipe>>
+
+  init {
+    val dao = AppDatabase.getInstance(application).recipeDao()
+    repository = RecipeRepository(dao)
+
+    allRecipes = repository.getAllRecipes()
+      .asLiveData(viewModelScope.coroutineContext)
+  }
+
+  fun insert(recipe: Recipe) = viewModelScope.launch {
+    repository.insert(recipe)
+  }
+
+  fun update(recipe: Recipe) = viewModelScope.launch {
+    repository.update(recipe)
+  }
+
+  fun delete(recipe: Recipe) = viewModelScope.launch {
+    repository.delete(recipe)
+  }
+
   fun setFavorite(id: Long, fav: Boolean) = viewModelScope.launch {
-    repo.setFavorite(id, fav)
+    repository.setFavorite(id, fav)
+  }
+
+  fun searchRecipes(query: String): LiveData<List<Recipe>> {
+    return repository.searchRecipes(query)
+      .asLiveData(viewModelScope.coroutineContext)
+  }
+
+  fun getRecipeById(id: Long): LiveData<Recipe> {
+    return repository.getRecipeById(id)
+      .asLiveData(viewModelScope.coroutineContext)
   }
 }

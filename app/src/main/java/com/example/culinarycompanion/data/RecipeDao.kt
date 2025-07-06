@@ -5,6 +5,7 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface RecipeDao {
+
     @Query("SELECT * FROM recipes")
     fun getAll(): Flow<List<Recipe>>
 
@@ -16,6 +17,9 @@ interface RecipeDao {
 
     @Query("SELECT * FROM recipes WHERE isFavorite = 1")
     fun getFavorites(): Flow<List<Recipe>>
+
+    @Query("SELECT * FROM recipes WHERE name LIKE :query OR ingredients LIKE :query ORDER BY name")
+    fun searchRecipes(query: String): Flow<List<Recipe>>  // ✅ FIXED: use Flow
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(recipe: Recipe)

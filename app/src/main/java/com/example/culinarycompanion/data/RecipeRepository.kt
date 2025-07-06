@@ -2,35 +2,32 @@ package com.example.culinarycompanion.data
 
 import kotlinx.coroutines.flow.Flow
 
-class RecipeRepository(private val dao: RecipeDao) {
+class RecipeRepository(private val recipeDao: RecipeDao) {
 
     fun getAllRecipes(): Flow<List<Recipe>> =
-        dao.getAll()
+        recipeDao.getAll()
 
     fun getRecipeById(id: Long): Flow<Recipe> =
-        dao.getById(id)
+        recipeDao.getById(id)
 
     fun getRecipesByCategory(category: String): Flow<List<Recipe>> =
-        dao.getByCategory(category)
+        recipeDao.getByCategory(category)
+
+    fun searchRecipes(query: String): Flow<List<Recipe>> =
+        recipeDao.searchRecipes("%$query%")  // Wildcards for partial matches
 
     suspend fun insert(recipe: Recipe) =
-        dao.insert(recipe)
+        recipeDao.insert(recipe)
 
     suspend fun update(recipe: Recipe) =
-        dao.update(recipe)
+        recipeDao.update(recipe)
 
     suspend fun delete(recipe: Recipe) =
-        dao.delete(recipe)
+        recipeDao.delete(recipe)
 
-    /**
-     * Returns only the recipes marked as favorite.
-     */
     fun getFavorites(): Flow<List<Recipe>> =
-        dao.getFavorites()
+        recipeDao.getFavorites()
 
-    /**
-     * Toggles the favorite flag for the given recipe ID.
-     */
     suspend fun setFavorite(id: Long, fav: Boolean) =
-        dao.setFavorite(id, fav)
+        recipeDao.setFavorite(id, fav)
 }
